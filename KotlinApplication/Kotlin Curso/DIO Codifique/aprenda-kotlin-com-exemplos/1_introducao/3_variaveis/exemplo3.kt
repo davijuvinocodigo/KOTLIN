@@ -11,11 +11,11 @@ fun main() {
     val d: Int  // 1
     
     if (someCondition()) {
-        d = 1   // 2
+        d = 1   // 2  variável inicializada 
     } else {
-        d = 2   // 2
+        d = 2   // 2  ou inicializada aqui
     }
     
-    println(d) // 3
+    println(d) // 3 
 
 }

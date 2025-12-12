@@ -16,7 +16,7 @@ fun main() {
     //inferredNonNull = null                                // 6
     
     fun strLength(str: String?): Int {                      // 7
-        return str?.length ?: 0
+        return str?.length ?: 0    // aqui usamos safe call e elvis operator e fazemos o um acesso seguro na variável nula caso ela seja nula
     }
     
     println(strLength(neverNull))                           // 8
