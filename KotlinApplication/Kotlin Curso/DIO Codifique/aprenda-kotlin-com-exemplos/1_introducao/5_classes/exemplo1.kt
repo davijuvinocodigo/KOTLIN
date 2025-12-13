@@ -4,9 +4,10 @@
  * @see [Classes](https://play.kotlinlang.org/byExample/01_introduction/05_Classes)
  */
 
-class Customer                                  // 1
+class Customer                                  // 1 
 
-class Contact(val id: Int, var email: String)   // 2
+// 2 com constructor personalizado que recebe parâmetros encapsulados com metodos get e set
+class Contact(val id: Int, var email: String)   
 
 fun main() {
 
