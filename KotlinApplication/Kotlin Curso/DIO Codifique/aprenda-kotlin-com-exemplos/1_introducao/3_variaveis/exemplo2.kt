@@ -5,7 +5,7 @@
  */
 fun main() {
 
-    var e: Int  // 1
-    println(e)  // 2 // Erro de compilação: variável não inicializada
+    var e: Int  // 1 Declaração de variável sem inicialização
+    println(e)  // 2 Erro de compilação: variável não inicializada
 
 }

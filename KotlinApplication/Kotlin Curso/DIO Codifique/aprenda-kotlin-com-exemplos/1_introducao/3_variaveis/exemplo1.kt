@@ -6,11 +6,13 @@
  */
 fun main() {
 
-    var a: String = "initial"  // 1
+    var a: String = "initial"  // 1 tipo explícito 
     println(a) // variável inicializada e mutável pode ser alterada
     a = "changed"
     println(a)
-    val b: Int = 1             // 2
-    val c = 3                  // 3
+    val b: Int = 1             // 2 tipo explícito
+    println(b) // variável imutável (constante)
+    val c = 3                  // 3 tipo inferido
+    println(c)
 
 }

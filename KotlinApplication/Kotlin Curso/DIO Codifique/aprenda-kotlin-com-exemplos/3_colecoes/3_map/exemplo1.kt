@@ -1,33 +1,44 @@
 /**
  * Mapas.
- *
- * @see [Map](https://play.kotlinlang.org/byExample/05_Collections/03_Map)
+ * Um Map em Kotlin é uma coleção de pares chave-valor. Ele mapeia chaves para valores e não permite chaves duplicadas. 
+   As chaves são usadas para recuperar valores posteriormente.
+ * @see [Map]
  */
 
-const val POINTS_X_PASS: Int = 15
-val EZPassAccounts: MutableMap<Int, Int> = mutableMapOf(1 to 100, 2 to 100, 3 to 100)   // 1
-val EZPassReport: Map<Int, Int> = EZPassAccounts                                        // 2
-
-fun updatePointsCredit(accountId: Int) {
-    if (EZPassAccounts.containsKey(accountId)) {                                        // 3
-        println("Updating $accountId...")                                               
-        EZPassAccounts[accountId] = EZPassAccounts.getValue(accountId) + POINTS_X_PASS  // 4
-    } else {
-        println("Error: Trying to update a non-existing account (id: $accountId)")
-    } 
-}
-
-fun accountsReport() {
-    println("EZ-Pass report:")
-    EZPassReport.forEach {                                                              // 5
-        k, v -> println("ID $k: credit $v")
-    }
-}
-
 fun main() {
-    accountsReport()                                                                    // 6
-    updatePointsCredit(1)                                                               // 7
-    updatePointsCredit(1)                                                               
-    updatePointsCredit(5)                                                               // 8 
-    accountsReport()                                                                    // 9
+    mapImutaveis()
+    mapMutaveis()
 }
+
+
+fun mapImutaveis() {
+    // Mapas imutáveis
+    val paises: Map<String, String> = mapOf(
+        "BR" to "Brasil",
+        "US" to "Estados Unidos",
+        "FR" to "França"
+    )
+
+    println(paises)                   // Imprime o mapa completo
+    println(paises["US"])             // Acessa o valor associado à chave "US"
+    println(paises.size)              // Tamanho do mapa
+    println(paises.containsKey("FR")) // Verifica se a chave "FR" está no mapa
+    println(paises.containsValue("Brasil")) // Verifica se o valor "Brasil" está no mapa
+}
+
+
+fun mapMutaveis() {
+    // Mapas mutáveis
+    val capitais: MutableMap<String, String> = mutableMapOf(
+        "BR" to "Brasília",
+        "US" to "Washington, D.C.",
+        "FR" to "Paris"
+    )
+
+    capitais["DE"] = "Berlim"         // Adiciona um par chave-valor
+    capitais.remove("US")             // Remove o par com a chave "US"
+
+    println(capitais)                 // Imprime o mapa atualizado
+}
+
+

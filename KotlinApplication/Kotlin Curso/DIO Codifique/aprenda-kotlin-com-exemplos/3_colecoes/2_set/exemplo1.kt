@@ -1,23 +1,29 @@
 /**
  * Conjuntos.
- *
- * @see [Set](https://play.kotlinlang.org/byExample/05_Collections/02_Set)
+ * UM Set em Kotlin é uma coleção não ordenada que não permite elementos duplicados. O tipo de conjunto padrão é imutável.   
+ * @see [Set]
  */
 
-val openIssues: MutableSet<String> = mutableSetOf("uniqueDescr1", "uniqueDescr2", "uniqueDescr3") // 1
-
-fun addIssue(uniqueDesc: String): Boolean {                                                       
-    return openIssues.add(uniqueDesc)                                                             // 2
-}
-
-fun getStatusLog(isAdded: Boolean): String {                                                       
-    return if (isAdded) "registered correctly." else "marked as duplicate and rejected."          // 3
-}
-
 fun main() {
-    val aNewIssue: String = "uniqueDescr4"
-    val anIssueAlreadyIn: String = "uniqueDescr2" 
+    setImutaveis()
+    setMutaveis()
+}
 
-    println("Issue $aNewIssue ${getStatusLog(addIssue(aNewIssue))}")                              // 4
-    println("Issue $anIssueAlreadyIn ${getStatusLog(addIssue(anIssueAlreadyIn))}")                // 5 
+fun setImutaveis() {
+    // Conjuntos imutáveis
+    val numeros: Set<Int> = setOf(1, 2, 3, 4, 5, 5)
+
+    println(numeros)                 // Imprime o conjunto completo
+    println(numeros.contains(3))     // Verifica se o elemento 3 está no conjunto
+    println(numeros.size)            // Tamanho do conjunto
+}
+
+fun setMutaveis() {
+    // Conjuntos mutáveis
+    val letras: MutableSet<Char> = mutableSetOf('A', 'B', 'C')
+
+    letras.add('D')                  // Adiciona um elemento
+    letras.remove('B')               // Remove um elemento
+
+    println(letras)                  // Imprime o conjunto atualizado
 }

@@ -1,25 +1,41 @@
 /**
  * Listas.
- *
- * @see [List](https://play.kotlinlang.org/byExample/05_Collections/01_List)
+ * Uma List em Kotlin é uma coleção ordenada de elementos e pode conter duplicatas. 
+   Ela é imutável por padrão, o que significa que, uma vez criada, a lista não pode ser alterada.
+ 
+ * @see [List]
  */
 
-val systemUsers: MutableList<Int> = mutableListOf(1, 2, 3)        // 1
-val sudoers: List<Int> = systemUsers                              // 2
-
-fun addSystemUser(newUser: Int) {                                 // 3
-    systemUsers.add(newUser)                      
-}
-
-fun getSysSudoers(): List<Int> {                                  // 4
-    return sudoers
-}
-
 fun main() {
-    addSystemUser(4)                                              // 5 
-    println("Tot sudoers: ${getSysSudoers().size}")               // 6
-    getSysSudoers().forEach {                                     // 7
-        i -> println("Some useful info on user $i")
-    }
-    // getSysSudoers().add(5) <- Error!                           // 8
+    listImutaveis()
+    listMutaveis()
+}    
+
+
+
+
+fun listImutaveis() {
+    // Listas imutáveis
+    val cores: List<String> = listOf("Vermelho", "Verde", "Azul")
+
+    println(cores)                 // Imprime a lista completa
+    println(cores[1])              // Acessa o segundo elemento
+    println(cores.size)            // Tamanho da lista
+    println(cores.contains("Amarelo")) // Verifica se o elemento "Amarelo" está na lista
+    println(cores.indexOf("Azul")) // Índice do elemento "Azul"
 }
+
+
+
+fun listMutaveis() {
+    // Listas mutáveis
+    val frutas: MutableList<String> = mutableListOf("Maçã", "Banana", "Laranja")
+
+    frutas.add("Uva")              // Adiciona um elemento
+    frutas.remove("Banana")        // Remove um elemento
+
+    println(frutas)                // Imprime a lista atualizada
+}
+
+
+

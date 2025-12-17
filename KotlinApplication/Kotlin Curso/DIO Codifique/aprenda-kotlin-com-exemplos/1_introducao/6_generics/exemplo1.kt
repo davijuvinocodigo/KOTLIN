@@ -25,7 +25,7 @@ class MutableStack<E>(vararg items: E) {              // 1 Cria uma classe gené
 
 
 fun main() {
-  val stack = MutableStack("A", "B", "C")   // 9 Cria uma instância da pilha genérica com elementos do tipo String
+  val stack = MutableStack("A", "B", "C")   // 9 Cria uma instância da pilha mutável com elementos iniciais "A", "B" e "C"
   stack.push("D")                           // 10 Adiciona o elemento "D" à pilha
   println(stack)                            // 11 Imprime o estado atual da pilha
 
