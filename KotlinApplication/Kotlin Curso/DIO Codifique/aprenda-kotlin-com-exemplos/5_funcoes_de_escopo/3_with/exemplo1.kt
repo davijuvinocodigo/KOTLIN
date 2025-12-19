@@ -1,19 +1,32 @@
 /**
  * Funções de Escopo: [with].
  *
- * @see [with](https://play.kotlinlang.org/byExample/06_scope_functions/03_with)
+ * @see [with]
+ * Executa um bloco de código no contexto de um objeto sem precisar usar it ou this.
+        *   Função: Similar ao run, mas não é função de extensão
+            Referência: this
+            Uso: Agrupar operações em um objeto
  */
 
-data class Configuration(val host: String, val port: Int) 
-
-fun main() {
-    val configuration = Configuration(host = "127.0.0.1", port = 9000) 
-
-    with(configuration) {
-        println("$host:$port")
+fun exemploWith() {
+    val lista = listOf("a", "b", "c")
+    
+    val resultado = with(lista) {
+        println("Tamanho: $size")
+        println("Primeiro: ${first()}")
+        println("Último: ${last()}")
+        joinToString(", ") // Última expressão é retornada
     }
-
-    // ao invés de:
-    println("${configuration.host}:${configuration.port}")    
-
+    
+    println("Resultado: $resultado") // "a, b, c"
+    
+    // Configurando objetos
+    data class Config(val host: String, val porta: Int, val ssl: Boolean)
+    
+    val config = Config("localhost", 8080, false)
+    
+    with(config) {
+        println("Servidor: $host:$porta")
+        println("SSL habilitado: $ssl")
+    }
 }

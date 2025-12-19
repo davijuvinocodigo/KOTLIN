@@ -1,21 +1,38 @@
 /**
  * Funções de Escopo: [apply].
  *
- * @see [apply](https://play.kotlinlang.org/byExample/06_scope_functions/04_apply)
+ * @see [apply]
+ * Similar ao also, mas usa this como referência. Ideal para inicialização de objetos.
+        *   Função: Retorna o próprio objeto (this)
+            Referência: this
+            Uso: Inicializar/configurar objetos
  */
 
-data class Person(var name: String, var age: Int, var about: String) {
-    constructor() : this("", 0, "")
-}
-
-fun main() {
-
-    val jake = Person()                                     // 1
-    val stringDescription = jake.apply {                    // 2
-        name = "Jake"                                       // 3
-        age = 30
-        about = "Android developer"
-    }.toString()                                            // 4
-
-    println(stringDescription)
+fun exemploApply() {
+    // Inicialização de objetos
+    val pessoa = Pessoa().apply {
+        nome = "Carlos"
+        idade = 25
+        endereco = "Av. B, 456"
+    }
+    
+    println("Pessoa: ${pessoa.nome}, ${pessoa.idade} anos")
+    
+    // Configuração de views (Android)
+    val textView = TextView().apply {
+        text = "Olá, Mundo!"
+        textSize = 16.0f
+        setTextColor(Color.BLACK)
+        gravity = Gravity.CENTER
+    }
+    
+    // Trabalhando com collections
+    val listaNumeros = mutableListOf<Int>().apply {
+        for (i in 1..10) {
+            add(i * i)
+        }
+        shuffle()
+    }
+    
+    println("Números ao quadrado: $listaNumeros")
 }

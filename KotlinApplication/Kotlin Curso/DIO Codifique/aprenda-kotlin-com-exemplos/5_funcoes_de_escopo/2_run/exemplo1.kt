@@ -1,21 +1,24 @@
 /**
  * Funções de Escopo: [run].
  *
- * @see [run](https://play.kotlinlang.org/byExample/06_scope_functions/02_run)
+ * @see [run]
+        *   Função: Executa lambda e retorna seu resultado
+            Referência: this (dentro do escopo)
+            Uso: Inicializar objetos e calcular valores
  */
 
-fun main() {
-
-    fun getNullableLength(ns: String?) {
-        println("for \"$ns\":")
-        ns?.run {                                                  // 1
-            println("\tis empty? " + isEmpty())                    // 2
-            println("\tlength = $length")                           
-            length                                                 // 3
-        }
-    }
-    getNullableLength(null)
-    getNullableLength("")
-    getNullableLength("some string with Kotlin")
-
+// Como função de extensão
+val pessoa = Pessoa("João", 25)
+val descricao = pessoa.run {
+    // 'this' refere-se a 'pessoa'
+    "Nome: $nome, Idade: $idade"
 }
+println(descricao) // "Nome: João, Idade: 25"
+
+// Forma não-extension (contexto isolado)
+val resultado = run {
+    val x = 5
+    val y = 3
+    x + y  // Retorna 8
+}
+println(resultado) // 8

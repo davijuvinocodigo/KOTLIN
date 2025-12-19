@@ -1,43 +1,31 @@
 /**
  * Funções de Escopo: [let].
  *
- * @see [let](https://play.kotlinlang.org/byExample/06_scope_functions/01_let)
+ * @see [let]
+    *   Função: Retorna o resultado da lambda
+        Referência: it (ou nome personalizado)
+        Uso: Transformar valores e tratar nullables
  */
 
-fun customPrint(s: String) {
-    print(s.uppercase())
-}
-
-fun main() {
-
-    val empty = "test".let {               // 1
-        customPrint(it)                    // 2
-        it.isEmpty()                       // 3
+fun exemploLet() {
+    val nome: String? = "João"
+    
+    // Uso básico
+    val resultado = nome?.let {
+        println("Nome: $it") // 'it' refere-se ao objeto
+        it.length          // Retorna o comprimento
     }
-    println(" is empty: $empty")
-
-
-    fun printNonNull(str: String?) {
-        println("Printing \"$str\":")
-
-        str?.let {                         // 4
-            print("\t")
-            customPrint(it)
-            println()
-        }
+    println("Comprimento: $resultado") // 4
+    
+    // Com múltiplas operações
+    val numero: Int? = 10
+    numero?.let {
+        val quadrado = it * it
+        println("O quadrado de $it é $quadrado")
     }
     
-    fun printIfBothNonNull(strOne: String?, strTwo: String?) {
-        strOne?.let { firstString ->       // 5 
-            strTwo?.let { secondString ->
-                customPrint("$firstString : $secondString")
-                println()
-            }
-        }
+    // Renomeando 'it'
+    nome?.let { nomeNaoNulo ->
+        println("Nome não nulo: $nomeNaoNulo")
     }
-    
-    printNonNull(null)
-    printNonNull("my string") 
-    printIfBothNonNull("First","Second") 
-
 }
