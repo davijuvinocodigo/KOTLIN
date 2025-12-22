@@ -11,23 +11,34 @@
 
     Analogia Simples
     Imagine que você tem uma classe Caixa:
-
     Sem operator functions: caixa1.somar(caixa2)
-
     Com operator functions: caixa1 + caixa2 (muito mais natural!)
 
-
-    Operadores Mais Comuns
-    +  -> plus
-    -  -> minus
-    *  -> times
-    /  -> div
-    == -> equals
-    <  -> compareTo
-    [] -> get e set
-    %  -> rem
-    unário - -> unaryMinus
-    unário + -> unaryPlus
+    
+Operador	Função	Exemplo de Uso
++	plus	a + b
+-	minus	a - b
+*	times	a * b
+/	div	a / b
+%	rem	a % b
+++	inc	a++ ou ++a
+--	dec	a-- ou --a
++a	unaryPlus	+a
+-a	unaryMinus	-a
+!a	not	!a
+==	equals	a == b
+!=	equals	a != b
+<, >, <=, >=	compareTo	a < b
+[]	get	a[i]
+[]=	set	a[i] = valor
+in	contains	a in b
+..	rangeTo	a..b
+()	invoke	a()
++=	plusAssign	a += b
+-=	minusAssign	a -= b
+*=	timesAssign	a *= b
+/=	divAssign	a /= b
+%=	remAssign	a %= b
 
 
 
@@ -47,6 +58,22 @@ val negativo = -caixa1  // Chama caixa1.unaryMinus()
 val positivo = +caixa1  // Chama caixa1.unaryPlus()
 val comparacao = caixa1 > caixa2  // Chama caixa1.compareTo(caixa2)
 val quantidade = caixa1[0]  // Chama caixa1.get(0)  
+
+
+//val quantidadeset = caixa1[0]= 10  // Chama caixa1.set(0, 10)
+/**
+    data class Caixa(val quantidade: Int)  // ← 'val' torna imutável
+
+    operator fun set(index: Int, value: Int) {
+        if (index == 0) {
+            // Não pode modificar 'quantidade' porque é 'val'
+            this.quantidade = value  // ← ERRO DE COMPILAÇÃO
+        }
+    }
+*/
+
+
+
 val igualdade = caixa1 == caixa2  // Chama caixa1.equals(caixa2)
 
 println(resultado) // Caixa(quantidade=8)   
@@ -58,9 +85,9 @@ println(negativo) // Caixa(quantidade=-5)
 println(positivo) // Caixa(quantidade=5)
 println(comparacao) // true
 println(quantidade) // 5
+//println(quantidadeset) // Exception: Cannot set value on immutable data class
 println(igualdade) // false
                                       
-
 }
 
 data class Caixa(val quantidade: Int) {
