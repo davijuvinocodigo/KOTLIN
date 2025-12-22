@@ -1,27 +1,38 @@
 /**
  * Infix Functions.
  *
- * @see [Functions](https://play.kotlinlang.org/byExample/01_introduction/02_Functions)
+ * @see [Functions]
+ * Conceito da infix function é permitir que uma função seja chamada de uma forma mais legível,
+ * parecida com uma linguagem natural.
  */
+
+import kotlin.math.pow
 
 fun main() {
 
-  infix fun Int.times(str: String) = str.repeat(this)        // 1
-  println(2 times "Bye ")                                    // 2
+  // Definindo função infix
+infix fun Int.vezes(outro: Int): Int = this * outro
 
-  val pair = "Ferrari" to "Katrina"                          // 3
-  println(pair)
+infix fun String.concatenarCom(outro: String): String = "$this $outro"
 
-  infix fun String.onto(other: String) = Pair(this, other)   // 4
-  val myPair = "McLaren" onto "Lucas"
-  println(myPair)
+// Uso
+val resultado1 = 5 vezes 3
+println(resultado1)  // 15
 
-  val sophia = Person("Sophia")
-  val claudia = Person("Claudia")
-  sophia likes claudia                                       // 5
+val frase = "Olá" concatenarCom "Mundo"
+println(frase)  // "Olá Mundo"
+
+
+val p1 = Ponto(0, 0)
+val p2 = Ponto(3, 4)
+val distancia = p1 distanciaPara p2
+println(distancia)  // 5.0
+
 }
 
-class Person(val name: String) {
-  val likedPeople = mutableListOf<Person>()
-  infix fun likes(other: Person) { likedPeople.add(other) }  // 6
+// Com classes
+class Ponto(val x: Int, val y: Int) {
+    infix fun distanciaPara(outro: Ponto): Double {
+        return Math.sqrt((x - outro.x).toDouble().pow(2) + (y - outro.y).toDouble().pow(2))
+    }
 }
