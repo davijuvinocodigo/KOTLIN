@@ -1,6 +1,6 @@
 # Projeto Kotlin + Spring Boot
 
-# Tratamento de Erros - melhores práticas
+## 📌 Tratamento de Erros - melhores práticas
 
 Resumo das recomendações para uso de `@ControllerAdvice` e tratamento de erros em Spring Boot (Kotlin).
 
@@ -26,7 +26,7 @@ Resumo das recomendações para uso de `@ControllerAdvice` e tratamento de erros
 
 
 
-# Validação e Boas Práticas
+## 📌 Validação e Boas Práticas
 
 Guia rápido de práticas recomendadas para validação em APIs Spring Boot com Kotlin.
 
@@ -54,8 +54,8 @@ Guia rápido de práticas recomendadas para validação em APIs Spring Boot com 
 
 
 
-
-Annotations em **Kotlin** são metadados aplicados a elementos do código (classes, propriedades, parâmetros, funções) que podem alterar ou influenciar o comportamento em tempo de compilação ou execução.
+## 🚀 Annotations em **Kotlin**
+ São metadados aplicados a elementos do código (classes, propriedades, parâmetros, funções) que podem alterar ou influenciar o comportamento em tempo de compilação ou execução.
 
 No contexto de **Spring Boot** e **Jakarta Validation**, elas são fundamentais para:
 
