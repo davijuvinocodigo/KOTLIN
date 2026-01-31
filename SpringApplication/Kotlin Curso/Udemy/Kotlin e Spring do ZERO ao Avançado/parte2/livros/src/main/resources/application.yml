@@ -15,4 +15,14 @@ spring:
         trace: false
         web-allow-others: false
   jackson:
-    default-property-inclusion: non_null      
+    default-property-inclusion: non_null    
+
+
+
+# swagger-ui
+springdoc:
+  swagger-ui:
+    operations-sorter: method
+    path: /swagger-ui
+  api-docs:
+    path: /v3/api-docs     

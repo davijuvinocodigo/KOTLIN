@@ -51,3 +51,7 @@
 ## 📚 Referências Rápidas
 - **Kotlin**: concisão, null-safety, extension functions, data classes, scoping functions (`let`, `apply`, `run`, `also`).
 - **Spring Boot**: injeção por construtor, controllers, Spring Data Pageable, `@PageableDefault`.
+
+## Start App
+````
+- ./gradlew bootRun
