@@ -1,4 +1,7 @@
 package com.livros.repository
 
-class CompraRepository {
+import com.livros.model.Compra
+import org.springframework.data.repository.CrudRepository
+
+interface CompraRepository: CrudRepository<Compra, Int> {
 }

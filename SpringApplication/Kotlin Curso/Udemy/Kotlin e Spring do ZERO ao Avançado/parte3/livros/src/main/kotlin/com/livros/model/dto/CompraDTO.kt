@@ -1,6 +1,6 @@
 package com.livros.model.dto
 
-class ComprarDTO (
+class CompraDTO (
     val clienteId: String,
     val produtoId: String,
     val quantidade: Int,

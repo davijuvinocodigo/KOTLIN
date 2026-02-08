@@ -12,8 +12,8 @@ import jakarta.persistence.ManyToOne
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-@Entity(name = "compras")
-data class Compras (
+@Entity(name = "compra")
+data class Compra (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +21,13 @@ data class Compras (
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    val clientes: Clientes,
+    val cliente: Cliente,
 
     @ManyToMany
     @JoinTable(name = "compra_livro",
         joinColumns = [JoinColumn(name = "compra_id")],
         inverseJoinColumns = [JoinColumn(name = "livro_id")])
-    val livros: MutableList<Livros>,
+    val livros: MutableList<Livro>,
 
     @Column
     val nfe: String? = null,

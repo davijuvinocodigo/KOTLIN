@@ -1,4 +1,12 @@
 package com.livros.events
 
-class CompraEvent {
-}
+import java.time.LocalDateTime
+
+data class ComprarEvent(
+    val pedidoId: String,
+    val clienteId: String,
+    val produtoId: String,
+    val quantidade: Int,
+    val valorTotal: Double,
+    val timestamp: LocalDateTime = LocalDateTime.now()
+)

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Positive
 
-data class AdicionarCompraDTO (
+data class POSTCompraDTO (
     @field:NotNull
     @field:Positive
     @JsonAlias("cliente_id")
