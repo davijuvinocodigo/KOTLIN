@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component
 @Component
 class CompraMapper(private val livroService: LivroService, private val clienteService: ClienteService) {
 
-    fun toModel(POSTCompraDTO: POSTCompraDTO): Compra {
-        val livros = livroService.buscarTodosPorIds(POSTCompraDTO.livroIds)
-        val cliente = clienteService.buscarPorId(POSTCompraDTO.clienteId)
+    fun toModel(post: POSTCompraDTO): Compra {
+        val livros = livroService.buscarTodosPorIds(post.livroIds)
+        val cliente = clienteService.buscarPorId(post.clienteId)
 
         return Compra(
             cliente = cliente,
