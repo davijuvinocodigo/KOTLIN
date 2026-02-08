@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationEvent
  * @param source O objeto que gerou o evento (geralmente a classe de serviço ou controlador que criou a compra).
  * @param compra A instância da compra que foi realizada.
  */
-class ApplicationEventBase(
+class CompraRealizadaEvent(
     source: Any,
     val compra: Compra
 ): ApplicationEvent(source) {

@@ -18,31 +18,31 @@ class ClienteController(
 ) {
 
      @GetMapping
-    fun getAll(@RequestParam name: String?): List<ClienteRESP> {
-        return clienteService.getAll(name).map { it.toResponse() }
+    fun buscarTodos(@RequestParam name: String?): List<ClienteRESP> {
+        return clienteService.buscarTodos(name).map { it.toResponse() }
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid customer: POSTClienteDTO) {
-       clienteService.create(customer.toCustomerModel())
+    fun criar(@RequestBody @Valid customer: POSTClienteDTO) {
+       clienteService.criar(customer.toCustomerModel())
     }
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: Int): ClienteRESP {
-        return clienteService.findById(id).toResponse()
+    fun buscarPorId(@PathVariable id: Int): ClienteRESP {
+        return clienteService.buscarPorId(id).toResponse()
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: Int, @RequestBody @Valid customer: PUTClienteDTO) {
-        val customerSaved = clienteService.findById(id)
-        clienteService.update(customer.toCustomerModel(customerSaved))
+    fun atualizar(@PathVariable id: Int, @RequestBody @Valid customer: PUTClienteDTO) {
+        val customerSaved = clienteService.buscarPorId(id)
+        clienteService.atualizar(customer.toCustomerModel(customerSaved))
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: Int) {
-        clienteService.delete(id)
+    fun excluir(@PathVariable id: Int) {
+        clienteService.excluir(id)
     }
 }

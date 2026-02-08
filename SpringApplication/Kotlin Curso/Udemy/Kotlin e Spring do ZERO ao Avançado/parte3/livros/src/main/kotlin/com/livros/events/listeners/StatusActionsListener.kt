@@ -1,6 +1,6 @@
 package com.livros.events.listeners
 
-import com.livros.events.ApplicationEventBase
+import com.livros.events.CompraRealizadaEvent
 import com.livros.service.LivroService
 import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Async
@@ -11,9 +11,9 @@ class StatusActionsListener(private val livroService: LivroService) {
 
     @Async
     @EventListener
-    fun listenerStatusActions(applicationEventBase: ApplicationEventBase) {
+    fun listenerStatusActions(compraRealizadaEvent: CompraRealizadaEvent) {
 
         println("Atualizando status dos livros")
-        livroService.compra(applicationEventBase.compra.livros)
+        livroService.comprar(compraRealizadaEvent.compra.livros)
     }
 }

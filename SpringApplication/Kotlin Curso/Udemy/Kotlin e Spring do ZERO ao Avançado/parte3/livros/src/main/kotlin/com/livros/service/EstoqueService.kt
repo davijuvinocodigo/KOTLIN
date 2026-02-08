@@ -1,6 +1,6 @@
 package com.livros.service
 
-import com.livros.events.ComprarEvent
+import com.livros.events.CompraRealizadaEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Service
 
@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service
 class EstoqueService {
 
     @EventListener
-    fun handlePurchaseEvent(event: ComprarEvent) {
-        println("=== Serviço de Estoque ===")
-        println("Recebido evento: Pedido ${event.pedidoId}")
-        println("Atualizando estoque do produto ${event.produtoId}")
-        println("Quantidade vendida: ${event.quantidade}")
+    fun handlePurchaseEvent(event: CompraRealizadaEvent) {
+        println("=== Servico de Estoque ===")
+        println("Recebendo evento de compra: ${event.compra.id}")
         println("---")
     }
 }

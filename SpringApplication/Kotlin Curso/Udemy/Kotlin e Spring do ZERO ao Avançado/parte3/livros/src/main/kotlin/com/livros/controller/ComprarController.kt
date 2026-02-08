@@ -1,7 +1,6 @@
 package com.livros.controller
 
 import com.livros.model.dto.POSTCompraDTO
-import com.livros.model.dto.CompraDTO
 import com.livros.model.mappers.CompraMapper
 import com.livros.service.CompraService
 import org.springframework.http.HttpStatus
@@ -19,29 +18,9 @@ class ComprarController (
 ) {
 
     @PostMapping
-    fun adicionarCompra(@RequestBody compraDTO: CompraDTO): String {
-        compraService.processarComprar(
-            pedidoId = generatePedidoId(),
-            clienteId = compraDTO.clienteId,
-            produtoId = compraDTO.produtoId,
-            quantidade = compraDTO.quantidade,
-            valorTotal = compraDTO.valor
-        )
-        return "Compra processada com sucesso!"
-    }
-
-
-    @PostMapping("/adicionar")
     @ResponseStatus(HttpStatus.CREATED)
-    fun adicionar(@RequestBody POSTCompraDTO: POSTCompraDTO) {
-
-        compraService.adicionar(compraMapper.toModel(POSTCompraDTO))
+    fun adicionar(@RequestBody postCompraDTO: POSTCompraDTO) {
+        compraService.criar(compraMapper.toModel(postCompraDTO))
     }
-
-
-    private fun generatePedidoId(): String {
-        return "ORD-${System.currentTimeMillis()}"
-    }
-
 
 }

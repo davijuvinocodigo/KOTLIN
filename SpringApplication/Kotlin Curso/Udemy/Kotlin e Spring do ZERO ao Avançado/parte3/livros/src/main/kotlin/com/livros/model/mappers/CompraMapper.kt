@@ -11,7 +11,7 @@ class CompraMapper(private val livroService: LivroService, private val clienteSe
 
     fun toModel(POSTCompraDTO: POSTCompraDTO): Compra {
         val livros = livroService.buscarTodosPorIds(POSTCompraDTO.livroIds)
-        val cliente = clienteService.findById(POSTCompraDTO.clienteId)
+        val cliente = clienteService.buscarPorId(POSTCompraDTO.clienteId)
 
         return Compra(
             cliente = cliente,

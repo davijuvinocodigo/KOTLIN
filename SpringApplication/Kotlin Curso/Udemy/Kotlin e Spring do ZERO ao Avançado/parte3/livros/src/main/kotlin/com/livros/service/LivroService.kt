@@ -10,56 +10,46 @@ import com.livros.repository.LivroRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class LivroService(
-    val livroRepository: LivroRepository
+    private val livroRepository: LivroRepository
 ) {
 
-    fun create(book: Livro) {
-        livroRepository.save(book)
+    fun criar(livro: Livro) = livroRepository.save(livro)
+
+    fun buscarTodos(paginacao: Pageable): Page<Livro> = livroRepository.findAll(paginacao)
+
+    fun buscarAtivos(paginacao: Pageable): Page<Livro> =
+        livroRepository.findByStatus(LivroStatus.ATIVO, paginacao)
+
+    fun buscarPorId(id: Int): Livro =
+        livroRepository.findById(id)
+            .orElseThrow { NotFoundException(Errors.ML101.message.format(id), Errors.ML101.code) }
+
+    @Transactional
+    fun excluir(id: Int) {
+        val livro = buscarPorId(id)
+        livro.status = LivroStatus.CANCELADO
+        livroRepository.save(livro)
     }
 
-    fun findAll(pageable: Pageable): Page<Livro> {
-        return livroRepository.findAll(pageable)
-    }
+    fun atualizar(livro: Livro) = livroRepository.save(livro)
 
-    fun findActives(pageable: Pageable): Page<Livro> {
-        return livroRepository.findByStatus(LivroStatus.ATIVO, pageable)
-    }
-
-    fun findById(id: Int): Livro {
-        return livroRepository.findById(id).orElseThrow{ NotFoundException(Errors.ML101.message.format(id), Errors.ML101.code) }
-    }
-
-    fun delete(id: Int) {
-        val book = findById(id)
-
-        book.status = LivroStatus.CANCELADO
-
-        update(book)
-    }
-
-    fun update(book: Livro) {
-        livroRepository.save(book)
-    }
-
-    fun deleteByCustomer(customer: Cliente) {
-        val books = livroRepository.findByCliente(customer)
-        for(book in books) {
-            book.status = LivroStatus.DELETADO
-        }
-        livroRepository.saveAll(books)
-    }
-
-    fun buscarTodosPorIds(livroIds: Set<Int>): List<Livro> {
-        return livroRepository.findAllById(livroIds).toList()
-    }
-
-    fun compra(livros: MutableList<Livro>) {
-        livros.map { it.status = LivroStatus.VENDIDO }
+    @Transactional
+    fun excluirPorCliente(cliente: Cliente) {
+        val livros = livroRepository.findByCliente(cliente)
+        livros.forEach { it.status = LivroStatus.DELETADO }
         livroRepository.saveAll(livros)
     }
 
+    fun buscarTodosPorIds(livroIds: Set<Int>): List<Livro> =
+        livroRepository.findAllById(livroIds).toList()
 
+    @Transactional
+    fun comprar(livros: MutableList<Livro>) {
+        livros.forEach { it.status = LivroStatus.VENDIDO }
+        livroRepository.saveAll(livros)
+    }
 }

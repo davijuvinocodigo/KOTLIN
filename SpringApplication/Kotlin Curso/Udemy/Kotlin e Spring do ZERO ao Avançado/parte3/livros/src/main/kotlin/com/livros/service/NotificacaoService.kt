@@ -1,6 +1,6 @@
 package com.livros.service
 
-import com.livros.events.ComprarEvent
+import com.livros.events.CompraRealizadaEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Service
 
@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service
 class NotificacaoService {
 
     @EventListener
-    fun handlePurchaseEvent(event: ComprarEvent) {
-        println("=== Serviço de Notificação ===")
-        println("Recebido evento: Pedido ${event.pedidoId}")
-        println("Enviando notificação para cliente ${event.clienteId}")
-        println("Pedido confirmado: ${event.produtoId} x ${event.quantidade}")
+    fun handlePurchaseEvent(event: CompraRealizadaEvent) {
+        println("=== Servico de Notificacao ===")
+        println("Recebendo evento de compra: ${event.compra.id}")
         println("---")
     }
 }

@@ -7,48 +7,38 @@ import com.livros.exception.NotFoundException
 import com.livros.model.Cliente
 import com.livros.repository.ClienteRepository
 import org.springframework.stereotype.Service
-import java.lang.Exception
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ClienteService(
-    val clienteRepository: ClienteRepository,
-    val livroService: LivroService
+    private val clienteRepository: ClienteRepository,
+    private val livroService: LivroService
 ) {
 
-    fun getAll(name: String?): List<Cliente> {
-        name?.let {
-            return clienteRepository.findByNomeContaining(it)
+    fun buscarTodos(nome: String?): List<Cliente> =
+        nome?.let { clienteRepository.findByNomeContaining(it) } ?: clienteRepository.findAll().toList()
+
+    fun criar(cliente: Cliente) = clienteRepository.save(cliente)
+
+    fun buscarPorId(id: Int): Cliente =
+        clienteRepository.findById(id)
+            .orElseThrow { NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code) }
+
+    fun atualizar(cliente: Cliente) {
+        val id = cliente.id ?: throw IllegalArgumentException("Id do cliente não pode ser nulo")
+        if (!clienteRepository.existsById(id)) {
+            throw NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code)
         }
-        return clienteRepository.findAll().toList()
+        clienteRepository.save(cliente)
     }
 
-    fun create(customer: Cliente) {
-        clienteRepository.save(customer)
+    @Transactional
+    fun excluir(id: Int) {
+        val cliente = buscarPorId(id)
+        livroService.excluirPorCliente(cliente)
+        cliente.status = ClienteStatus.INATIVO
+        clienteRepository.save(cliente)
     }
 
-    fun findById(id: Int): Cliente {
-        return clienteRepository.findById(id).orElseThrow{ NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code) }
-    }
-
-    fun update(customer: Cliente) {
-        if(!clienteRepository.existsById(customer.id!!)){
-            throw Exception()
-        }
-
-        clienteRepository.save(customer)
-    }
-
-    fun delete(id: Int) {
-        val customer = findById(id)
-        livroService.deleteByCustomer(customer)
-
-        customer.status = ClienteStatus.INATIVO
-
-        clienteRepository.save(customer)
-    }
-
-    fun emailAvailable(email: String): Boolean {
-        return !clienteRepository.existsByEmail(email)
-    }
-
+    fun emailAvailable(email: String): Boolean = !clienteRepository.existsByEmail(email)
 }

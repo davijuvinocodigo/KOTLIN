@@ -23,36 +23,36 @@ class LivroController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody @Valid request: POSTLivroDTO) {
-        val customer = clienteService.findById(request.clienteId)
-        livroService.create(request.toBookModel(customer))
+    fun criar(@RequestBody @Valid request: POSTLivroDTO) {
+        val customer = clienteService.buscarPorId(request.clienteId)
+        livroService.criar(request.toBookModel(customer))
     }
 
     @GetMapping
-    fun findAll(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<LivroRESP> {
-        return livroService.findAll(pageable).map { it.toResponse() }
+    fun buscarTodos(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<LivroRESP> {
+        return livroService.buscarTodos(pageable).map { it.toResponse() }
     }
 
     @GetMapping("/active")
-    fun findActives(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<LivroRESP> =
-        livroService.findActives(pageable).map { it.toResponse() }
+    fun buscarAtivos(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<LivroRESP> =
+        livroService.buscarAtivos(pageable).map { it.toResponse() }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Int): LivroRESP {
-        return livroService.findById(id).toResponse()
+    fun buscarPorId(@PathVariable id: Int): LivroRESP {
+        return livroService.buscarPorId(id).toResponse()
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: Int) {
-        livroService.delete(id)
+    fun excluir(@PathVariable id: Int) {
+        livroService.excluir(id)
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: Int, @RequestBody book: PUTLivroDTO) {
-        val bookSaved = livroService.findById(id)
-        livroService.update(book.toBookModel(bookSaved))
+    fun atualizar(@PathVariable id: Int, @RequestBody book: PUTLivroDTO) {
+        val livroSaved = livroService.buscarPorId(id)
+        livroService.atualizar(book.toBookModel(livroSaved))
     }
 
 }
