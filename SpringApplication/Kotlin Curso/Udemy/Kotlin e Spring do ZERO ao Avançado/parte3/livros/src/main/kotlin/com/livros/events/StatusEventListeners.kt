@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 
 @Component
-class AtualizaStatusActions(private val livroService: LivroService) {
+class StatusEventListeners(private val livroService: LivroService) {
 
     @Async
     @EventListener

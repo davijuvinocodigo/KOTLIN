@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class NfeActions(private val compraService: CompraService) {
+class NfeEventListeners(private val compraService: CompraService) {
 
     @Async
     @EventListener
