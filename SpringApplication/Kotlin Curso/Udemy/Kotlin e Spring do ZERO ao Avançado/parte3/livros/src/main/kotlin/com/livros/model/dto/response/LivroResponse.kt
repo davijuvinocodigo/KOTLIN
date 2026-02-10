@@ -4,7 +4,7 @@ import com.livros.model.enums.LivroStatus
 import com.livros.model.Cliente
 import java.math.BigDecimal
 
-data class LivroRESP(
+data class LivroResponse(
     var id: Int? = null,
     var nome: String,
     var valor: BigDecimal,

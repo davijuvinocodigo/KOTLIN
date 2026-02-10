@@ -1,6 +1,6 @@
 package com.livros.service
 
-import com.livros.events.CompraRealizadaEvent
+import com.livros.events.CompraRealizadaEventDto
 import com.livros.model.Compra
 import com.livros.repository.CompraRepository
 import org.springframework.context.ApplicationEventPublisher
@@ -18,7 +18,7 @@ class CompraService (
         compraRepository.save(compra)
 
         println("Disparando evento de compra")
-        applicationEventPublisher.publishEvent(CompraRealizadaEvent(this, compra))
+        applicationEventPublisher.publishEvent(CompraRealizadaEventDto(this, compra))
         println("Finalização do processamento!")
     }
 

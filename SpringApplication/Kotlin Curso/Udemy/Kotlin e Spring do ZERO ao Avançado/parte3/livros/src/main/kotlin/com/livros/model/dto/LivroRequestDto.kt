@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal
 
-data class POSTLivroDTO (
+data class LivroRequestDto (
 
     @field:NotEmpty(message = "Nome deve ser informado")
     var nome: String,

@@ -1,8 +1,8 @@
 package com.livros.controller
 
-import com.livros.model.dto.POSTClienteDTO
-import com.livros.model.dto.PUTClienteDTO
-import com.livros.model.dto.response.ClienteRESP
+import com.livros.model.dto.ClienteRequestDto
+import com.livros.model.dto.ClienteAtualizaRequestDto
+import com.livros.model.dto.response.ClienteResponse
 import com.livros.extension.toCustomerModel
 import com.livros.extension.toResponse
 import com.livros.service.ClienteService
@@ -18,24 +18,24 @@ class ClienteController(
 ) {
 
      @GetMapping
-    fun buscarTodos(@RequestParam name: String?): List<ClienteRESP> {
+    fun buscarTodos(@RequestParam name: String?): List<ClienteResponse> {
         return clienteService.buscarTodos(name).map { it.toResponse() }
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun criar(@RequestBody @Valid customer: POSTClienteDTO) {
+    fun criar(@RequestBody @Valid customer: ClienteRequestDto) {
        clienteService.criar(customer.toCustomerModel())
     }
 
     @GetMapping("/{id}")
-    fun buscarPorId(@PathVariable id: Int): ClienteRESP {
+    fun buscarPorId(@PathVariable id: Int): ClienteResponse {
         return clienteService.buscarPorId(id).toResponse()
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun atualizar(@PathVariable id: Int, @RequestBody @Valid customer: PUTClienteDTO) {
+    fun atualizar(@PathVariable id: Int, @RequestBody @Valid customer: ClienteAtualizaRequestDto) {
         val customerSaved = clienteService.buscarPorId(id)
         clienteService.atualizar(customer.toCustomerModel(customerSaved))
     }

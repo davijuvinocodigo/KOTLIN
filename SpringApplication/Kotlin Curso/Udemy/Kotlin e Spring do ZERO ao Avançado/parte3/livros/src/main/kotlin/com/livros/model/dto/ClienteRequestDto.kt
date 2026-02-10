@@ -4,7 +4,7 @@ import com.livros.validation.EmailAvailable
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotEmpty
 
-data class POSTClienteDTO (
+data class ClienteRequestDto (
     @field:NotEmpty(message = "Nome deve ser informado")
     var nome: String,
 

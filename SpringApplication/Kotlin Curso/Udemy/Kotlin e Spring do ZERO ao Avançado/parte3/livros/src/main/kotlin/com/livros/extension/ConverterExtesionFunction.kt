@@ -1,26 +1,26 @@
 package com.livros.extension
 
-import com.livros.model.dto.POSTLivroDTO
-import com.livros.model.dto.POSTClienteDTO
-import com.livros.model.dto.PUTLivroDTO
-import com.livros.model.dto.PUTClienteDTO
-import com.livros.model.dto.response.LivroRESP
-import com.livros.model.dto.response.ClienteRESP
+import com.livros.model.dto.LivroRequestDto
+import com.livros.model.dto.ClienteRequestDto
+import com.livros.model.dto.LivroRequestAtualizaDto
+import com.livros.model.dto.ClienteAtualizaRequestDto
+import com.livros.model.dto.response.LivroResponse
+import com.livros.model.dto.response.ClienteResponse
 import com.livros.model.enums.LivroStatus
 import com.livros.model.enums.ClienteStatus
 import com.livros.model.Livro
 import com.livros.model.Cliente
 
 
-fun POSTClienteDTO.toCustomerModel(): Cliente {
+fun ClienteRequestDto.toCustomerModel(): Cliente {
     return Cliente(nome = this.nome, email = this.email, status = ClienteStatus.ATIVO)
 }
 
-fun PUTClienteDTO.toCustomerModel(previousValue: Cliente): Cliente {
+fun ClienteAtualizaRequestDto.toCustomerModel(previousValue: Cliente): Cliente {
     return Cliente(id = previousValue.id, nome = this.name, email = this.email, status = previousValue.status)
 }
 
-fun POSTLivroDTO.toBookModel(customer: Cliente): Livro {
+fun LivroRequestDto.toBookModel(customer: Cliente): Livro {
     return Livro(
         nome = this.nome,
         valor = this.valor,
@@ -29,7 +29,7 @@ fun POSTLivroDTO.toBookModel(customer: Cliente): Livro {
     )
 }
 
-fun PUTLivroDTO.toBookModel(previousValue: Livro): Livro {
+fun LivroRequestAtualizaDto.toBookModel(previousValue: Livro): Livro {
     return Livro(
         id = previousValue.id,
         nome = this.name ?: previousValue.nome,
@@ -39,8 +39,8 @@ fun PUTLivroDTO.toBookModel(previousValue: Livro): Livro {
     )
 }
 
-fun Cliente.toResponse(): ClienteRESP {
-    return ClienteRESP(
+fun Cliente.toResponse(): ClienteResponse {
+    return ClienteResponse(
         id = this.id,
         nome = this.nome,
         email = this.email,
@@ -48,8 +48,8 @@ fun Cliente.toResponse(): ClienteRESP {
     )
 }
 
-fun Livro.toResponse(): LivroRESP {
-    return LivroRESP(
+fun Livro.toResponse(): LivroResponse {
+    return LivroResponse(
         id = this.id,
         nome = this.nome,
         valor = this.valor,

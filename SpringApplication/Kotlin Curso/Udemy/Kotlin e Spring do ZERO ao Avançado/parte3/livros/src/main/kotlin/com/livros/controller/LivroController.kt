@@ -1,8 +1,8 @@
 package com.livros.controller
 
-import com.livros.model.dto.POSTLivroDTO
-import com.livros.model.dto.PUTLivroDTO
-import com.livros.model.dto.response.LivroRESP
+import com.livros.model.dto.LivroRequestDto
+import com.livros.model.dto.LivroRequestAtualizaDto
+import com.livros.model.dto.response.LivroResponse
 import com.livros.extension.toBookModel
 import com.livros.extension.toResponse
 import com.livros.service.LivroService
@@ -23,22 +23,22 @@ class LivroController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun criar(@RequestBody @Valid request: POSTLivroDTO) {
+    fun criar(@RequestBody @Valid request: LivroRequestDto) {
         val customer = clienteService.buscarPorId(request.clienteId)
         livroService.criar(request.toBookModel(customer))
     }
 
     @GetMapping
-    fun buscarTodos(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<LivroRESP> {
+    fun buscarTodos(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<LivroResponse> {
         return livroService.buscarTodos(pageable).map { it.toResponse() }
     }
 
     @GetMapping("/active")
-    fun buscarAtivos(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<LivroRESP> =
+    fun buscarAtivos(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<LivroResponse> =
         livroService.buscarAtivos(pageable).map { it.toResponse() }
 
     @GetMapping("/{id}")
-    fun buscarPorId(@PathVariable id: Int): LivroRESP {
+    fun buscarPorId(@PathVariable id: Int): LivroResponse {
         return livroService.buscarPorId(id).toResponse()
     }
 
@@ -50,7 +50,7 @@ class LivroController(
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun atualizar(@PathVariable id: Int, @RequestBody book: PUTLivroDTO) {
+    fun atualizar(@PathVariable id: Int, @RequestBody book: LivroRequestAtualizaDto) {
         val livroSaved = livroService.buscarPorId(id)
         livroService.atualizar(book.toBookModel(livroSaved))
     }

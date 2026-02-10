@@ -1,6 +1,5 @@
-package com.livros.events.actions
+package com.livros.events
 
-import com.livros.events.CompraRealizadaEvent
 import com.livros.service.CompraService
 import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Async
@@ -12,11 +11,11 @@ class NfeEventListeners(private val compraService: CompraService) {
 
     @Async
     @EventListener
-    fun listenerNfeActions(compraRealizadaEvent: CompraRealizadaEvent) {
+    fun listenerNfeActions(event: CompraRealizadaEventDto) {
 
         println("Gerando NFE")
         val nfe = UUID.randomUUID().toString()
-        val compra = compraRealizadaEvent.compra.copy(nfe = nfe)
+        val compra = event.compra.copy(nfe = nfe)
         compraService.atualizar(compra)
     }
 }

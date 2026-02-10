@@ -1,8 +1,8 @@
 package com.livros.exception
 
 
-import com.livros.model.dto.response.ErrorRESP
-import com.livros.model.dto.response.FieldErrorRESP
+import com.livros.model.dto.response.ErrorResponse
+import com.livros.model.dto.response.FieldErrorResponse
 import com.livros.model.enums.Errors
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,8 +15,8 @@ import org.springframework.web.context.request.WebRequest
 class ControllerAdvice {
 
     @ExceptionHandler(NotFoundException::class)
-    fun handleNotFoundException(ex: NotFoundException, request: WebRequest): ResponseEntity<ErrorRESP> {
-        val erro = ErrorRESP(
+    fun handleNotFoundException(ex: NotFoundException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val erro = ErrorResponse(
             HttpStatus.NOT_FOUND.value(),
             ex.message,
             ex.errorCode,
@@ -27,8 +27,8 @@ class ControllerAdvice {
     }
 
     @ExceptionHandler(BadRequestException::class)
-    fun handleBadRequestException(ex: BadRequestException, request: WebRequest): ResponseEntity<ErrorRESP> {
-        val erro = ErrorRESP(
+    fun handleBadRequestException(ex: BadRequestException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val erro = ErrorResponse(
             HttpStatus.BAD_REQUEST.value(),
             ex.message,
             ex.errorCode,
@@ -39,12 +39,12 @@ class ControllerAdvice {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException, request: WebRequest): ResponseEntity<ErrorRESP> {
-        val erro = ErrorRESP(
+    fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException, request: WebRequest): ResponseEntity<ErrorResponse> {
+        val erro = ErrorResponse(
             HttpStatus.UNPROCESSABLE_ENTITY.value(),
             Errors.ML001.message,
             Errors.ML001.code,
-            ex.bindingResult.fieldErrors.map { FieldErrorRESP(it.defaultMessage ?: "invalid", it.field) }
+            ex.bindingResult.fieldErrors.map { FieldErrorResponse(it.defaultMessage ?: "invalid", it.field) }
         )
 
         return ResponseEntity(erro, HttpStatus.UNPROCESSABLE_ENTITY)

@@ -1,7 +1,7 @@
 package com.livros.model.mappers
 
 import com.livros.model.Compra
-import com.livros.model.dto.POSTCompraDTO
+import com.livros.model.dto.CompraRequestDto
 import com.livros.service.ClienteService
 import com.livros.service.LivroService
 import org.springframework.stereotype.Component
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class CompraMapper(private val livroService: LivroService, private val clienteService: ClienteService) {
 
-    fun toModel(post: POSTCompraDTO): Compra {
+    fun toModel(post: CompraRequestDto): Compra {
         val livros = livroService.buscarTodosPorIds(post.livroIds)
         val cliente = clienteService.buscarPorId(post.clienteId)
 

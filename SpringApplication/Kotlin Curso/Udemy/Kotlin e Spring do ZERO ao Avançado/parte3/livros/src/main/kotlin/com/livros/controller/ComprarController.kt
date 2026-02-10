@@ -1,6 +1,6 @@
 package com.livros.controller
 
-import com.livros.model.dto.POSTCompraDTO
+import com.livros.model.dto.CompraRequestDto
 import com.livros.model.mappers.CompraMapper
 import com.livros.service.CompraService
 import org.springframework.http.HttpStatus
@@ -19,8 +19,8 @@ class ComprarController (
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun adicionar(@RequestBody postCompraDTO: POSTCompraDTO) {
-        compraService.criar(compraMapper.toModel(postCompraDTO))
+    fun adicionar(@RequestBody compraRequestDto: CompraRequestDto) {
+        compraService.criar(compraMapper.toModel(compraRequestDto))
     }
 
 }
