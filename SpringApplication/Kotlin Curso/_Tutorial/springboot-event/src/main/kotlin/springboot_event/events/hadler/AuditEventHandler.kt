@@ -13,7 +13,7 @@ class AuditEventHandler {
     @EventListener
     fun handleEvent(auditEvent: AuditEvent<*>) {
         try {
-            val data = ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(auditEvent.data)
+            val data = ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(auditEvent)
             println("Json Data : $data")
         } catch (ex: Exception) {
             ex.printStackTrace()
