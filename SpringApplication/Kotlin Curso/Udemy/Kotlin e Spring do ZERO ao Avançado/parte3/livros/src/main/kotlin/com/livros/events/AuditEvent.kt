@@ -10,7 +10,7 @@ import com.livros.model.Compra
  * @param source O objeto que gerou o evento (geralmente a classe de serviço ou controlador que criou a compra).
  * @param compra A instância da compra que foi realizada.
  */
-data class CompraRealizadaEventDto(
+class CompraRealizadaEventDto(
     val source: Any,
     val compra: Compra
 )
