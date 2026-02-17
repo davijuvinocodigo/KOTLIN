@@ -1,4 +1,3 @@
 package com.livros.events
 
-class RequestLogDto {
-}
+data class RequestLogDto(val data: Map<String, Any>)

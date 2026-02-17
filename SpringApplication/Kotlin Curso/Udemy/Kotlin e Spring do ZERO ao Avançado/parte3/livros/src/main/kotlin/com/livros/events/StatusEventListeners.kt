@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component
 @Component
 class StatusEventListeners(private val livroService: LivroService) {
 
-    @Async
-    @EventListener
-    fun listenerStatusActions(event: CompraRealizadaEventDto) {
+    //@Async
+    //@EventListener
+    fun listenerStatusActions(auditEvent: AuditEvent<*>) {
 
-        println("Atualizando status dos livros")
-        livroService.comprar(event.compra.livros)
+        //println("Atualizando status dos livros")
+        //livroService.comprar(event.compra.livros)
     }
 }

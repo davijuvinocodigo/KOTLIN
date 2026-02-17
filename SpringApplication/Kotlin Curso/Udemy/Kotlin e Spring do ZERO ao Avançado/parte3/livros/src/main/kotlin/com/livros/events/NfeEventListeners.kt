@@ -9,13 +9,13 @@ import java.util.UUID
 @Component
 class NfeEventListeners(private val compraService: CompraService) {
 
-    @Async
-    @EventListener
-    fun listenerNfeActions(event: CompraRealizadaEventDto) {
+    //@Async
+    //@EventListener
+    fun listenerNfeActions(auditEvent: AuditEvent<*>) {
 
-        println("Gerando NFE")
+        //println("Gerando NFE")
         val nfe = UUID.randomUUID().toString()
-        val compra = event.compra.copy(nfe = nfe)
-        compraService.atualizar(compra)
+        //val compra = event.compra.copy(nfe = nfe)
+        //compraService.atualizar(compra)
     }
 }

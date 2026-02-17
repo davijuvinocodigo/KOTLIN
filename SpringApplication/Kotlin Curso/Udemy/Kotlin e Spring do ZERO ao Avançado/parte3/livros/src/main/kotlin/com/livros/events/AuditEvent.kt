@@ -1,6 +1,6 @@
 package com.livros.events
 
-import com.livros.model.Compra
+import org.springframework.context.ApplicationEvent
 
 /**
  * Evento personalizado para representar uma compra realizada.
@@ -8,9 +8,5 @@ import com.livros.model.Compra
  * reajam a essa ação, como enviar notificações, atualizar o estoque, etc.
  *
  * @param source O objeto que gerou o evento (geralmente a classe de serviço ou controlador que criou a compra).
- * @param compra A instância da compra que foi realizada.
  */
-class CompraRealizadaEventDto(
-    val source: Any,
-    val compra: Compra
-)
+class AuditEvent<T: Any>(source: T) : ApplicationEvent(source)
