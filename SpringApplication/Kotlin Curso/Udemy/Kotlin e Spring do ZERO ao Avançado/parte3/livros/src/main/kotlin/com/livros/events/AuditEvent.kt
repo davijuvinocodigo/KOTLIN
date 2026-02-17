@@ -9,4 +9,4 @@ import org.springframework.context.ApplicationEvent
  *
  * @param source O objeto que gerou o evento (geralmente a classe de serviço ou controlador que criou a compra).
  */
-class AuditEvent<T: Any>(source: T) : ApplicationEvent(source)
+data class AuditEvent<T: Any>(private val data: T) : ApplicationEvent(data)

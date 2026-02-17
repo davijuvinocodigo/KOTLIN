@@ -18,7 +18,7 @@ class CompraService (
         compraRepository.save(compra)
 
         println("Disparando evento de compra")
-        auditEventPublisher.publishEvent(AuditEvent(this))
+        auditEventPublisher.publishEvent(AuditEvent(compra))
         println("Finalização do processamento!")
     }
 
