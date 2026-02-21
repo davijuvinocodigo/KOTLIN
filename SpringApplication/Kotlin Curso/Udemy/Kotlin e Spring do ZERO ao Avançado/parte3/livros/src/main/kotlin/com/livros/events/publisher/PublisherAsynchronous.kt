@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component
 // Publicador Assíncrono (Genérico)
 
 @Component
-class AsynchronousPublisher<T: AuditEvent<*>>(
+class PublisherAsynchronous<T: AuditEvent<*>>(
     publisher: ApplicationEventPublisher
-): EventPublisher<T>(publisher) {
+): PublisherEvent<T>(publisher) {
     override fun publish(event: T) {
         Thread{
             Thread.sleep(1000)

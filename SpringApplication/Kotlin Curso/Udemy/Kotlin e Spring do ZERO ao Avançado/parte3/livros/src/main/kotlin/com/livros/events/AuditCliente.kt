@@ -2,7 +2,7 @@ package com.livros.events
 
 import com.livros.model.Cliente
 
-class AuditEventCliente(
+class AuditCliente(
     source: Any,
     data: Cliente
-): Event<Cliente>(source, data, type = "CLIENTE")
+): AuditEvent<Cliente>(source, data, type = "CLIENTE")

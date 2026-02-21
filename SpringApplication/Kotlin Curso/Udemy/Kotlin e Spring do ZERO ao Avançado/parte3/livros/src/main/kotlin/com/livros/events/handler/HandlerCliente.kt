@@ -1,11 +1,11 @@
 package com.livros.events.handler
 
-import com.livros.events.AuditEventCliente
+import com.livros.events.AuditCliente
 import org.springframework.stereotype.Component
 
 @Component
-class EventClienteHandler: HandleEvent<AuditEventCliente>() {
-        override fun process(event: AuditEventCliente) {
+class HandlerCliente: HandlerEvent<AuditCliente>() {
+        override fun process(event: AuditCliente) {
 
     }
 }

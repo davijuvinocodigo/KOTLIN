@@ -1,26 +1,23 @@
 package com.livros.events.handler
 
-import com.livros.events.AuditEvent
-import com.livros.events.RequestLogDto
-import com.livros.model.Compra
+import com.livros.events.AuditCompra
 import com.livros.service.CompraService
+import com.livros.service.LivroService
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class HandlerNfe(private val compraService: CompraService) : HandlerEvent() {
+class HandleCompra(
+    private val livroService: LivroService,
+    private val compraService: CompraService,
+) : HandlerEvent<AuditCompra>() {
 
-    override fun onEvent(auditEvent: AuditEvent<*>) {
+    override fun process(event: AuditCompra) {
+        println("👂 ${this.javaClass.simpleName} processando nfe: ${event.type}")
+        val compraNfeUpdate = event.data.copy(nfe = UUID.randomUUID().toString())
+        val compraLivros = event.data.livros
 
-        println("Gerando nfe da compra")
-
-        val requestLogDto = auditEvent.source as RequestLogDto
-        val auditAuditEventMessage = requestLogDto.data["message"] as AuditEvent<*>
-        val compra = auditAuditEventMessage.source as Compra
-
-        // Processar
-        val compraUpdate = compra.copy(nfe = UUID.randomUUID().toString())
-        compraService.atualizar(compraUpdate)
-
+        compraService.atualizar(compraNfeUpdate)
+        livroService.comprar(compraLivros)
     }
 }

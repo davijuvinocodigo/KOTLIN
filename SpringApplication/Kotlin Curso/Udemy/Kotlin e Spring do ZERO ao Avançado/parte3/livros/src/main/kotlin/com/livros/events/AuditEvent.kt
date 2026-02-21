@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 
-abstract class Event<T>(
+abstract class AuditEvent<T>(
     source: Any,
     val data: T,
     val id: String = UUID.randomUUID().toString(),

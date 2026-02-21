@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component
 // Publicador Síncrono (Genérico)
 
 @Component
-class SynchronousPublisher<T: AuditEvent<*>>(
+class PublisherSynchronous<T: AuditEvent<*>>(
     publisher: ApplicationEventPublisher
-): EventPublisher<T>(publisher) {
+): PublisherEvent<T>(publisher) {
     override fun publish(event: T) {
         println("📢 [Síncrono] Publicando evento: ${event.type}")
         publisher.publishEvent(event)
