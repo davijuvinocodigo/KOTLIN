@@ -1,12 +1,14 @@
 package com.livros.events
 
 import org.springframework.context.ApplicationEvent
+import java.time.LocalDateTime
+import java.util.UUID
 
-/**
- * Evento personalizado para representar uma compra realizada.
- * Este evento pode ser publicado quando uma nova compra é criada, permitindo que outros componentes do sistema
- * reajam a essa ação, como enviar notificações, atualizar o estoque, etc.
- *
- * @param source O objeto que gerou o evento (geralmente a classe de serviço ou controlador que criou a compra).
- */
-data class AuditEvent<T: Any>(private val data: T) : ApplicationEvent(data)
+
+abstract class Event<T>(
+    source: Any,
+    val data: T,
+    val id: String = UUID.randomUUID().toString(),
+    val timestamp: LocalDateTime = LocalDateTime.now(),
+    val type: String
+) : ApplicationEvent(source)

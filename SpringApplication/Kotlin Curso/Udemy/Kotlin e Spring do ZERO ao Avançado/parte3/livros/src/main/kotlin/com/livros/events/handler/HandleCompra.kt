@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class AuditEventNfeHandler(private val compraService: CompraService) : AuditEventHandler() {
+class HandlerNfe(private val compraService: CompraService) : HandlerEvent() {
 
     override fun onEvent(auditEvent: AuditEvent<*>) {
 
         println("Gerando nfe da compra")
 
         val requestLogDto = auditEvent.source as RequestLogDto
-        val auditEventMessage = requestLogDto.data["message"] as AuditEvent<*>
-        val compra = auditEventMessage.source as Compra
+        val auditAuditEventMessage = requestLogDto.data["message"] as AuditEvent<*>
+        val compra = auditAuditEventMessage.source as Compra
 
         // Processar
         val compraUpdate = compra.copy(nfe = UUID.randomUUID().toString())
