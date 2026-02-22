@@ -1,6 +1,6 @@
 package com.livros.model.dto
 
-import com.livros.validacao.EmailDisponivel
+import com.livros.validation.EmailDisponivel
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotEmpty
 

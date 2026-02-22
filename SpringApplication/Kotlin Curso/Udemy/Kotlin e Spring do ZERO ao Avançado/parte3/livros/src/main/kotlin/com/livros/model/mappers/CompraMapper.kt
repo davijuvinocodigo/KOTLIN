@@ -1,7 +1,7 @@
 package com.livros.model.mappers
 
 import com.livros.model.dto.CompraRequisicaoDto
-import com.livros.modelo.Compra
+import com.livros.model.Compra
 import com.livros.service.ClienteService
 import com.livros.service.LivroService
 import org.springframework.stereotype.Component

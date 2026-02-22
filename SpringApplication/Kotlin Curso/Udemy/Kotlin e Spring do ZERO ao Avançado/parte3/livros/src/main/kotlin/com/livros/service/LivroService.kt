@@ -10,6 +10,7 @@ import com.livros.extensao.paraModelo
 import com.livros.model.Cliente
 import com.livros.model.Livro
 import com.livros.repository.LivroRepository
+import com.livros.repository.ClienteRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -18,11 +19,12 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class LivroService(
     private val livroRepository: LivroRepository,
-    private val clienteService: ClienteService
+    private val clienteRepository: ClienteRepository
 ) {
 
     fun criar(requisicao: LivroRequisicaoDto): Livro {
-        val cliente = clienteService.buscarPorId(requisicao.clienteId)
+        val cliente = clienteRepository.findById(requisicao.clienteId)
+            .orElseThrow { NaoEncontradoException(Erros.CL001.mensagem.format(requisicao.clienteId), Erros.CL001.codigo) }
         val livro = requisicao.paraModelo(cliente)
         return livroRepository.save(livro)
     }

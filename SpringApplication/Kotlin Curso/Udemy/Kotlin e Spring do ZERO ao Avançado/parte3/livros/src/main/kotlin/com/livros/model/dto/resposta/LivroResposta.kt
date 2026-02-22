@@ -1,7 +1,7 @@
 package com.livros.model.dto.resposta
 
 import com.livros.model.enums.LivroStatus
-import com.livros.modelo.Cliente
+import com.livros.model.Cliente
 import java.math.BigDecimal
 
 data class LivroResposta(
