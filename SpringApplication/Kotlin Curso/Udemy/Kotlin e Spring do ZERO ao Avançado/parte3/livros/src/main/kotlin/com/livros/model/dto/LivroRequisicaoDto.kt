@@ -7,11 +7,11 @@ import java.math.BigDecimal
 
 data class LivroRequisicaoDto(
     @field:NotEmpty(message = "Nome deve ser informado")
-    var nome: String,
+    val nome: String,
 
     @field:NotNull(message = "Valor deve ser informado")
-    var valor: BigDecimal,
+    val valor: BigDecimal,
 
     @JsonAlias("cliente_id")
-    var clienteId: Int
+    val clienteId: Int
 )

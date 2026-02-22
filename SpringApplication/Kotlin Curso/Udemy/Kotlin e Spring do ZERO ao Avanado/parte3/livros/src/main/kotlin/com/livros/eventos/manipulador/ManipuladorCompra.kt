@@ -1,3 +1,4 @@
+// ...existing code...
 package com.livros.eventos.manipulador
 
 import com.livros.eventos.AuditoriaCompra
@@ -24,3 +25,4 @@ class ManipuladorCompra(
         livroService.comprar(livrosCompra)
     }
 }
+// ...existing code...

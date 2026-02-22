@@ -6,9 +6,9 @@ import jakarta.validation.constraints.NotEmpty
 
 data class ClienteRequisicaoDto(
     @field:NotEmpty(message = "Nome deve ser informado")
-    var nome: String,
+    val nome: String,
 
     @field:Email(message = "E-mail deve ser válido")
     @EmailDisponivel(message = "E-mail já está em uso")
-    var email: String
+    val email: String
 )
