@@ -1,4 +1,4 @@
-package com.livros.model.dto.response
+package com.livros.model.dto.resposta
 
 data class FieldErrorResponse(
     var messsage: String,

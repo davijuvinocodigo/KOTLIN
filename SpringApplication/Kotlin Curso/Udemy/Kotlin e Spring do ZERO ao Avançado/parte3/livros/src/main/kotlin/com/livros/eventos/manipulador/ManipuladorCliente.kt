@@ -1,11 +1,11 @@
-package com.livros.events.handler
+package com.livros.eventos.manipulador
 
-import com.livros.events.AuditCliente
+import com.livros.eventos.AuditoriaCliente
 import org.springframework.stereotype.Component
 
 @Component
-class HandlerCliente: HandlerEvent<AuditCliente>() {
-        override fun process(event: AuditCliente) {
+class HandlerCliente: ManipuladorEvento<AuditoriaCliente>() {
+        override fun process(event: AuditoriaCliente) {
             with(event.data) {
                 println("🛒 Compra processada:")
                 println("   ID: $id")

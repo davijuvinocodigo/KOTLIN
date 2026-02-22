@@ -1,4 +1,4 @@
-package com.livros.model.dto.response
+package com.livros.model.dto.resposta
 
 import com.livros.model.enums.LivroStatus
 import com.livros.model.Cliente

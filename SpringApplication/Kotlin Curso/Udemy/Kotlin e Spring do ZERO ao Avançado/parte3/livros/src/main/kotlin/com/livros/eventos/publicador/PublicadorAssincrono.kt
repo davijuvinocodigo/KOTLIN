@@ -1,15 +1,15 @@
-package com.livros.events.publisher
+package com.livros.eventos.publicador
 
-import com.livros.events.AuditEvent
+import com.livros.eventos.AuditoriaEvento
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Component
 
 // Publicador Assíncrono (Genérico)
 
 @Component
-class PublisherAsynchronous<T: AuditEvent<*>>(
+class PublisherAsynchronous<T: AuditoriaEvento<*>>(
     publisher: ApplicationEventPublisher
-): PublisherEvent<T>(publisher) {
+): PublicadorEvento<T>(publisher) {
     override fun publish(event: T) {
         Thread{
             Thread.sleep(1000)

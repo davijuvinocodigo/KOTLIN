@@ -1,4 +1,4 @@
-package com.livros.exception
+package com.livros.excecao
 
 
 import com.livros.model.dto.response.ErrorResponse
@@ -14,8 +14,8 @@ import org.springframework.web.context.request.WebRequest
 @ControllerAdvice
 class ControllerAdvice {
 
-    @ExceptionHandler(NotFoundException::class)
-    fun handleNotFoundException(ex: NotFoundException, request: WebRequest): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(NaoEncontradoException::class)
+    fun handleNotFoundException(ex: NaoEncontradoException, request: WebRequest): ResponseEntity<ErrorResponse> {
         val erro = ErrorResponse(
             HttpStatus.NOT_FOUND.value(),
             ex.message,
@@ -26,8 +26,8 @@ class ControllerAdvice {
         return ResponseEntity(erro, HttpStatus.NOT_FOUND)
     }
 
-    @ExceptionHandler(BadRequestException::class)
-    fun handleBadRequestException(ex: BadRequestException, request: WebRequest): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(RequisicaoInvalidaException::class)
+    fun handleBadRequestException(ex: RequisicaoInvalidaException, request: WebRequest): ResponseEntity<ErrorResponse> {
         val erro = ErrorResponse(
             HttpStatus.BAD_REQUEST.value(),
             ex.message,

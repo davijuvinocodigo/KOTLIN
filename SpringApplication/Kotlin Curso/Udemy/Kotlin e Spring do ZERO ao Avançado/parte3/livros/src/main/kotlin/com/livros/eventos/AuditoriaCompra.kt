@@ -1,8 +1,8 @@
-package com.livros.events
+package com.livros.eventos
 
 import com.livros.model.Compra
 
 class AuditCompra(
     source: Any,
     data: Compra
-): AuditEvent<Compra>(source, data, type = "COMPRA")
+): AuditoriaEvento<Compra>(source, data, type = "COMPRA")

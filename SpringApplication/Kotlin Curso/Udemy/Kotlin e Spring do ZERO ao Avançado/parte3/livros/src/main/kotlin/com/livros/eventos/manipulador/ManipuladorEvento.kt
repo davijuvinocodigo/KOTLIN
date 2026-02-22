@@ -1,11 +1,11 @@
-package com.livros.events.handler
+package com.livros.eventos.manipulador
 
 import org.springframework.context.event.EventListener
-import com.livros.events.AuditEvent
+import com.livros.eventos.AuditoriaEvento
 
 // Genérica
 
-abstract class HandlerEvent<T: AuditEvent<*>> {
+abstract class HandlerEvent<T: AuditoriaEvento<*>> {
     abstract fun process(event: T)
 
     @EventListener

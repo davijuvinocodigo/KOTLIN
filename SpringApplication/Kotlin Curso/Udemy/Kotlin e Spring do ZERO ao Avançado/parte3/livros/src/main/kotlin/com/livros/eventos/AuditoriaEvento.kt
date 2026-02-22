@@ -1,4 +1,4 @@
-package com.livros.events
+package com.livros.eventos
 
 import org.springframework.context.ApplicationEvent
 import java.time.LocalDateTime
