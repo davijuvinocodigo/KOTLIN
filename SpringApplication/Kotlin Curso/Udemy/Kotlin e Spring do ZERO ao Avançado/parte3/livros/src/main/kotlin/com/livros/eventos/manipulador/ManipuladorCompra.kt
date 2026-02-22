@@ -7,17 +7,17 @@ import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class HandleCompra(
+class ManipuladorCompra(
     private val livroService: LivroService,
-    private val compraService: CompraService,
+    private val compraService: CompraService
 ) : ManipuladorEvento<AuditoriaCompra>() {
 
-    override fun process(event: AuditoriaCompra) {
-        println("👂 ${this.javaClass.simpleName} processando nfe: ${event.type}")
-        val compraNfeUpdate = event.data.copy(nfe = UUID.randomUUID().toString())
-        val compraLivros = event.data.livros
+    override fun processar(evento: AuditoriaCompra) {
+        println("📄 ManipuladorCompra processando nota fiscal: ${evento.tipo}")
+        val compraComNfe = evento.dados.copy(nfe = UUID.randomUUID().toString())
+        val livrosCompra = evento.dados.livros
 
-        compraService.atualizar(compraNfeUpdate)
-        livroService.comprar(compraLivros)
+        compraService.atualizar(compraComNfe)
+        livroService.comprar(livrosCompra)
     }
 }

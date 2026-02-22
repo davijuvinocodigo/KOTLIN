@@ -8,8 +8,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface LivroRepository : JpaRepository<Livro, Int> {
-
-    fun findByStatus(status: LivroStatus, pageable: Pageable): Page<Livro>
+    fun findByStatus(status: LivroStatus, paginacao: Pageable): Page<Livro>
     fun findByCliente(cliente: Cliente): List<Livro>
-
 }

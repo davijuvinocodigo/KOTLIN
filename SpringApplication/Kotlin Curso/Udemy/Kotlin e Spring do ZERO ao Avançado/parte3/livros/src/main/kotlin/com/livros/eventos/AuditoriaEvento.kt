@@ -4,11 +4,10 @@ import org.springframework.context.ApplicationEvent
 import java.time.LocalDateTime
 import java.util.UUID
 
-
-abstract class AuditEvent<T>(
+abstract class AuditoriaEvento<T>(
     source: Any,
-    val data: T,
+    val dados: T,
     val id: String = UUID.randomUUID().toString(),
-    val timestamp: LocalDateTime = LocalDateTime.now(),
-    val type: String
+    val dataHora: LocalDateTime = LocalDateTime.now(),
+    val tipo: String
 ) : ApplicationEvent(source)

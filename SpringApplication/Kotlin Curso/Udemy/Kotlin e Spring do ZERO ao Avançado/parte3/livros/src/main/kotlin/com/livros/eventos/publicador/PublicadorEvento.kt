@@ -3,7 +3,6 @@ package com.livros.eventos.publicador
 import com.livros.eventos.AuditoriaEvento
 import org.springframework.context.ApplicationEventPublisher
 
-//Publicador Generico para auditar eventos.
-abstract class PublisherEvent<T: AuditoriaEvento<*>>(protected val publisher: ApplicationEventPublisher) {
-    abstract fun publish(event: T)
+abstract class PublicadorEvento<T : AuditoriaEvento<*>>(protected val publicador: ApplicationEventPublisher) {
+    abstract fun publicar(evento: T)
 }

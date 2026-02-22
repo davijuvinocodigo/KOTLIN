@@ -1,16 +1,14 @@
 package com.livros.eventos.manipulador
 
-import org.springframework.context.event.EventListener
 import com.livros.eventos.AuditoriaEvento
+import org.springframework.context.event.EventListener
 
-// Genérica
-
-abstract class HandlerEvent<T: AuditoriaEvento<*>> {
-    abstract fun process(event: T)
+abstract class ManipuladorEvento<T : AuditoriaEvento<*>> {
+    abstract fun processar(evento: T)
 
     @EventListener
-    fun handleEvent(event: T){
-        println("👂 ${this.javaClass.simpleName} processando: ${event.type}")
-        process(event)
+    fun manipularEvento(evento: T) {
+        println("👂 ${this.javaClass.simpleName} processando: ${evento.tipo}")
+        processar(evento)
     }
 }

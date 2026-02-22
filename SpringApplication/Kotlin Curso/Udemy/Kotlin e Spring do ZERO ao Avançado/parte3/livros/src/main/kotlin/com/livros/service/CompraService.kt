@@ -1,30 +1,21 @@
 package com.livros.service
 
-import com.livros.events.AuditCompra
-import com.livros.events.AuditEvent
-import com.livros.events.publisher.PublisherAsynchronous
-import com.livros.events.publisher.PublisherEvent
-import com.livros.events.publisher.PublisherSynchronous
+import com.livros.eventos.AuditoriaCompra
+import com.livros.eventos.publicador.PublicadorAssincrono
 import com.livros.model.Compra
 import com.livros.repository.CompraRepository
 import org.springframework.stereotype.Service
 
 @Service
-class CompraService (
-
+class CompraService(
     private val compraRepository: CompraRepository,
-    private val publisherSynchronous: PublisherSynchronous<AuditEvent<*>>,
-    private val publisherAsynchronous: PublisherAsynchronous<AuditEvent<*>>
-
+    private val publicadorAssincrono: PublicadorAssincrono<AuditoriaCompra>
 ) {
 
-    fun criar(compra: Compra){
+    fun criar(compra: Compra) {
         compraRepository.save(compra)
-
         println("Publicando evento de compra de forma assíncrona...")
-        val event = AuditCompra(this, compra)
-        publisherAsynchronous.publish(event)
-
+        publicadorAssincrono.publicar(AuditoriaCompra(this, compra))
         println("Fim da publicação do evento de compra.")
     }
 

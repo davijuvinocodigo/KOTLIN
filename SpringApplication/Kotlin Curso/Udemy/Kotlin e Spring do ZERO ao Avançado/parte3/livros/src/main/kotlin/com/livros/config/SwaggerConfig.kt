@@ -1,4 +1,6 @@
 package com.livros.config;
+
+
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Contact
 import io.swagger.v3.oas.models.info.Info
@@ -12,33 +14,32 @@ import org.springframework.context.annotation.Configuration
 class SwaggerConfig {
 
     @Bean
-    fun publicApi(): GroupedOpenApi {
+    fun apiPublica(): GroupedOpenApi {
         return GroupedOpenApi.builder()
-            .group("base-service")
+            .group("livros-service")
             .pathsToMatch("/**")
             .build()
     }
 
     @Bean
-    fun customOpenAPI(
-        @Value("AAA") appDescription: String?, @Value(
-            "1.0.0"
-        ) appVersion: String?
+    fun openAPICustomizado(
+        @Value("API para gerenciamento de livros e clientes") descricao: String,
+        @Value("1.0.0") versao: String
     ): OpenAPI {
-        val contact = Contact()
-        contact.email = "hendisantika@yahoo.co.id"
-        contact.name = "HENDI SANTIKA"
-        contact.url = "https://www.s.id/hendisantika"
+        val contato = Contact()
+        contato.email = "contato@exemplo.com"
+        contato.name = "Equipe de Desenvolvimento"
+        contato.url = "https://www.exemplo.com"
+
         return OpenAPI()
             .info(
                 Info()
-                    .title("Microservice Base Service Application API")
-                    .version(appVersion)
-                    .description(appDescription)
+                    .title("API de Gerenciamento de Livros")
+                    .version(versao)
+                    .description(descricao)
                     .termsOfService("http://swagger.io/terms/")
                     .license(License().name("Apache 2.0").url("http://springdoc.org"))
-                    .contact(contact)
+                    .contact(contato)
             )
     }
-
 }

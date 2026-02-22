@@ -4,17 +4,15 @@ import com.livros.eventos.AuditoriaEvento
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Component
 
-// Publicador Assíncrono (Genérico)
-
 @Component
-class PublisherAsynchronous<T: AuditoriaEvento<*>>(
-    publisher: ApplicationEventPublisher
-): PublicadorEvento<T>(publisher) {
-    override fun publish(event: T) {
-        Thread{
+class PublicadorAssincrono<T : AuditoriaEvento<*>>(
+    publicador: ApplicationEventPublisher
+) : PublicadorEvento<T>(publicador) {
+    override fun publicar(evento: T) {
+        Thread {
             Thread.sleep(1000)
-            println("🔄 [Assíncrono] Publicando evento: ${event.type}")
-            publisher.publishEvent(event)
+            println("🔄 [Assíncrono] Publicando evento: ${evento.tipo}")
+            publicador.publishEvent(evento)
         }.start()
     }
 }

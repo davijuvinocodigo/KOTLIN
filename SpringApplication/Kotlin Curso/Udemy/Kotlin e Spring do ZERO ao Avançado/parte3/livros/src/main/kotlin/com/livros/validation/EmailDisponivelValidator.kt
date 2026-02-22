@@ -1,14 +1,19 @@
 package com.livros.validation
 
 import com.livros.service.ClienteService
-import jakarta.validation.*;
-class EmailAvailableValidator(var clienteService: ClienteService): ConstraintValidator<EmailDisponivel, String> {
+import jakarta.validation.ConstraintValidator
+import jakarta.validation.ConstraintValidatorContext
+import org.springframework.stereotype.Component
+
+@Component
+class EmailDisponivelValidator(
+    private val clienteService: ClienteService
+) : ConstraintValidator<EmailDisponivel, String> {
 
     override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean {
-        if(value.isNullOrEmpty()) {
+        if (value.isNullOrEmpty()) {
             return false
         }
-        return clienteService.emailAvailable(value)
+        return clienteService.emailDisponivel(value)
     }
-
 }

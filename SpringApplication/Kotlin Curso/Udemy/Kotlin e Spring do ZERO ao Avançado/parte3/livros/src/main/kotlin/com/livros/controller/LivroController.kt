@@ -1,12 +1,10 @@
 package com.livros.controller
 
-import com.livros.model.dto.LivroRequestDto
-import com.livros.model.dto.LivroRequestAtualizaDto
-import com.livros.model.dto.response.LivroResponse
-import com.livros.extension.toBookModel
-import com.livros.extension.toResponse
+import com.livros.model.dto.LivroRequisicaoDto
+import com.livros.model.dto.LivroAtualizacaoDto
+import com.livros.model.dto.resposta.LivroResposta
+import com.livros.extensao.paraResposta
 import com.livros.service.LivroService
-import com.livros.service.ClienteService
 import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -17,29 +15,28 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("livros")
 class LivroController(
-    val livroService: LivroService,
-    val clienteService: ClienteService
+    private val livroService: LivroService
 ) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun criar(@RequestBody @Valid request: LivroRequestDto) {
-        val customer = clienteService.buscarPorId(request.clienteId)
-        livroService.criar(request.toBookModel(customer))
+    fun criar(@RequestBody @Valid requisicao: LivroRequisicaoDto) {
+        livroService.criar(requisicao)
     }
 
     @GetMapping
-    fun buscarTodos(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<LivroResponse> {
-        return livroService.buscarTodos(pageable).map { it.toResponse() }
+    fun buscarTodos(@PageableDefault(page = 0, size = 10) paginacao: Pageable): Page<LivroResposta> {
+        return livroService.buscarTodos(paginacao).map { it.paraResposta() }
     }
 
-    @GetMapping("/active")
-    fun buscarAtivos(@PageableDefault(page = 0, size = 10) pageable: Pageable): Page<LivroResponse> =
-        livroService.buscarAtivos(pageable).map { it.toResponse() }
+    @GetMapping("/ativos")
+    fun buscarAtivos(@PageableDefault(page = 0, size = 10) paginacao: Pageable): Page<LivroResposta> {
+        return livroService.buscarAtivos(paginacao).map { it.paraResposta() }
+    }
 
     @GetMapping("/{id}")
-    fun buscarPorId(@PathVariable id: Int): LivroResponse {
-        return livroService.buscarPorId(id).toResponse()
+    fun buscarPorId(@PathVariable id: Int): LivroResposta {
+        return livroService.buscarPorId(id).paraResposta()
     }
 
     @DeleteMapping("/{id}")
@@ -50,9 +47,7 @@ class LivroController(
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun atualizar(@PathVariable id: Int, @RequestBody book: LivroRequestAtualizaDto) {
-        val livroSaved = livroService.buscarPorId(id)
-        livroService.atualizar(book.toBookModel(livroSaved))
+    fun atualizar(@PathVariable id: Int, @RequestBody livro: LivroAtualizacaoDto) {
+        livroService.atualizar(id, livro)
     }
-
 }

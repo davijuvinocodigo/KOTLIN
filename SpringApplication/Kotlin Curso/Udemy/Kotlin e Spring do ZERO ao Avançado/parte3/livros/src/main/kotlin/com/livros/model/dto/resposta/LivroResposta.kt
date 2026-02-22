@@ -1,10 +1,10 @@
 package com.livros.model.dto.resposta
 
 import com.livros.model.enums.LivroStatus
-import com.livros.model.Cliente
+import com.livros.modelo.Cliente
 import java.math.BigDecimal
 
-data class LivroResponse(
+data class LivroResposta(
     var id: Int? = null,
     var nome: String,
     var valor: BigDecimal,

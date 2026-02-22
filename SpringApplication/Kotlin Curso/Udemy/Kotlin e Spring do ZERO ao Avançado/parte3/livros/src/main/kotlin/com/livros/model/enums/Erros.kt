@@ -1,10 +1,9 @@
 package com.livros.model.enums
 
-enum class Errors(val code: String, val message: String) {
-
-    ML001("ML-001", "Invalid Request"),
-    ML101("ML-101", "Book [%s] not exists"),
-    ML102("ML-102", "Cannot update book with status [%s]"),
-    ML201("ML-201", "Customer [%s] not exists")
-
+enum class Erros(val codigo: String, val mensagem: String) {
+    VL001("VL-001", "Requisição inválida"),
+    LV001("LV-001", "Livro [%s] não encontrado"),
+    LV002("LV-002", "Não é possível alterar livro com status [%s]"),
+    LV003("LV-003", "Livros com IDs [%s] não encontrados"),
+    CL001("CL-001", "Cliente [%s] não encontrado")
 }

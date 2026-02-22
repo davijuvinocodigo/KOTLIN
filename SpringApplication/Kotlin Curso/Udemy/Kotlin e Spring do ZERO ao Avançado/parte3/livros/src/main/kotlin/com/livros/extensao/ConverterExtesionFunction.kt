@@ -1,46 +1,54 @@
-package com.livros.extension
+package com.livros.extensao
 
-import com.livros.model.dto.LivroRequestDto
-import com.livros.model.dto.ClienteRequestDto
-import com.livros.model.dto.LivroRequestAtualizaDto
-import com.livros.model.dto.ClienteAtualizaRequestDto
-import com.livros.model.dto.response.LivroResponse
-import com.livros.model.dto.response.ClienteResponse
-import com.livros.model.enums.LivroStatus
+import com.livros.model.dto.ClienteRequisicaoDto
+import com.livros.model.dto.ClienteAtualizacaoDto
+import com.livros.model.dto.LivroRequisicaoDto
+import com.livros.model.dto.LivroAtualizacaoDto
+import com.livros.model.dto.resposta.ClienteResposta
+import com.livros.model.dto.resposta.LivroResposta
 import com.livros.model.enums.ClienteStatus
-import com.livros.model.Livro
+import com.livros.model.enums.LivroStatus
 import com.livros.model.Cliente
+import com.livros.model.Livro
 
-
-fun ClienteRequestDto.toCustomerModel(): Cliente {
-    return Cliente(nome = this.nome, email = this.email, status = ClienteStatus.ATIVO)
+fun ClienteRequisicaoDto.paraModelo(): Cliente {
+    return Cliente(
+        nome = this.nome,
+        email = this.email,
+        status = ClienteStatus.ATIVO
+    )
 }
 
-fun ClienteAtualizaRequestDto.toCustomerModel(previousValue: Cliente): Cliente {
-    return Cliente(id = previousValue.id, nome = this.name, email = this.email, status = previousValue.status)
+fun ClienteAtualizacaoDto.paraModelo(valorAnterior: Cliente): Cliente {
+    return Cliente(
+        id = valorAnterior.id,
+        nome = this.nome,
+        email = this.email,
+        status = valorAnterior.status
+    )
 }
 
-fun LivroRequestDto.toBookModel(customer: Cliente): Livro {
+fun LivroRequisicaoDto.paraModelo(cliente: Cliente): Livro {
     return Livro(
         nome = this.nome,
         valor = this.valor,
         status = LivroStatus.ATIVO,
-        cliente = customer
+        cliente = cliente
     )
 }
 
-fun LivroRequestAtualizaDto.toBookModel(previousValue: Livro): Livro {
+fun LivroAtualizacaoDto.paraModelo(valorAnterior: Livro): Livro {
     return Livro(
-        id = previousValue.id,
-        nome = this.name ?: previousValue.nome,
-        valor = this.price ?: previousValue.valor,
-        status = previousValue.status,
-        cliente = previousValue.cliente
+        id = valorAnterior.id,
+        nome = this.nome ?: valorAnterior.nome,
+        valor = this.valor ?: valorAnterior.valor,
+        status = valorAnterior.status,
+        cliente = valorAnterior.cliente
     )
 }
 
-fun Cliente.toResponse(): ClienteResponse {
-    return ClienteResponse(
+fun Cliente.paraResposta(): ClienteResposta {
+    return ClienteResposta(
         id = this.id,
         nome = this.nome,
         email = this.email,
@@ -48,8 +56,8 @@ fun Cliente.toResponse(): ClienteResponse {
     )
 }
 
-fun Livro.toResponse(): LivroResponse {
-    return LivroResponse(
+fun Livro.paraResposta(): LivroResposta {
+    return LivroResposta(
         id = this.id,
         nome = this.nome,
         valor = this.valor,

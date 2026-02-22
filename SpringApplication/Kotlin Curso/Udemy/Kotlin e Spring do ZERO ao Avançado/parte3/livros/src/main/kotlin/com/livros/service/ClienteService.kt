@@ -1,9 +1,15 @@
 package com.livros.service
 
 
+import com.livros.eventos.AuditoriaCliente
+import com.livros.eventos.publicador.PublicadorSincrono
+import com.livros.excecao.NaoEncontradoException
+import com.livros.excecao.RequisicaoInvalidaException
+import com.livros.model.dto.ClienteAtualizacaoDto
+import com.livros.model.dto.ClienteRequisicaoDto
 import com.livros.model.enums.ClienteStatus
-import com.livros.model.enums.Errors
-import com.livros.exception.NotFoundException
+import com.livros.model.enums.Erros
+import com.livros.extensao.paraModelo
 import com.livros.model.Cliente
 import com.livros.repository.ClienteRepository
 import org.springframework.stereotype.Service
@@ -12,24 +18,33 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ClienteService(
     private val clienteRepository: ClienteRepository,
-    private val livroService: LivroService
+    private val livroService: LivroService,
+    private val publicadorEvento: PublicadorSincrono<AuditoriaCliente>
 ) {
 
-    fun buscarTodos(nome: String?): List<Cliente> =
-        nome?.let { clienteRepository.findByNomeContaining(it) } ?: clienteRepository.findAll().toList()
+    fun buscarTodos(nome: String?): List<Cliente> {
+        return nome?.let { clienteRepository.findByNomeContaining(it) }
+            ?: clienteRepository.findAll().toList()
+    }
 
-    fun criar(cliente: Cliente) = clienteRepository.save(cliente)
+    fun criar(requisicao: ClienteRequisicaoDto): Cliente {
+        val cliente = requisicao.paraModelo()
+        val clienteSalvo = clienteRepository.save(cliente)
 
-    fun buscarPorId(id: Int): Cliente =
-        clienteRepository.findById(id)
-            .orElseThrow { NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code) }
+        publicadorEvento.publicar(AuditoriaCliente(this, clienteSalvo))
+        return clienteSalvo
+    }
 
-    fun atualizar(cliente: Cliente) {
-        val id = cliente.id ?: throw IllegalArgumentException("Id do cliente não pode ser nulo")
-        if (!clienteRepository.existsById(id)) {
-            throw NotFoundException(Errors.ML201.message.format(id), Errors.ML201.code)
-        }
-        clienteRepository.save(cliente)
+    fun buscarPorId(id: Int): Cliente {
+        return clienteRepository.findById(id)
+            .orElseThrow { NaoEncontradoException(Erros.CL001.mensagem.format(id), Erros.CL001.codigo) }
+    }
+
+    @Transactional
+    fun atualizar(id: Int, requisicao: ClienteAtualizacaoDto) {
+        val clienteExistente = buscarPorId(id)
+        val clienteAtualizado = requisicao.paraModelo(clienteExistente)
+        clienteRepository.save(clienteAtualizado)
     }
 
     @Transactional
@@ -40,5 +55,7 @@ class ClienteService(
         clienteRepository.save(cliente)
     }
 
-    fun emailAvailable(email: String): Boolean = !clienteRepository.existsByEmail(email)
+    fun emailDisponivel(email: String): Boolean {
+        return !clienteRepository.existsByEmail(email)
+    }
 }

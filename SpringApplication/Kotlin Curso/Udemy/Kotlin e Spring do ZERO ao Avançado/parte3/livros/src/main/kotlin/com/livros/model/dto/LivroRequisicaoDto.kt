@@ -5,12 +5,11 @@ import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal
 
-data class LivroRequestDto (
-
+data class LivroRequisicaoDto(
     @field:NotEmpty(message = "Nome deve ser informado")
     var nome: String,
 
-    @field:NotNull(message = "Price deve ser informado")
+    @field:NotNull(message = "Valor deve ser informado")
     var valor: BigDecimal,
 
     @JsonAlias("cliente_id")

@@ -1,11 +1,14 @@
 package com.livros.service
 
-
+import com.livros.excecao.NaoEncontradoException
+import com.livros.excecao.RequisicaoInvalidaException
+import com.livros.model.dto.LivroAtualizacaoDto
+import com.livros.model.dto.LivroRequisicaoDto
+import com.livros.model.enums.Erros
 import com.livros.model.enums.LivroStatus
-import com.livros.model.enums.Errors
-import com.livros.exception.NotFoundException
-import com.livros.model.Livro
+import com.livros.extensao.paraModelo
 import com.livros.model.Cliente
+import com.livros.model.Livro
 import com.livros.repository.LivroRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -14,42 +17,82 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class LivroService(
-    private val livroRepository: LivroRepository
+    private val livroRepository: LivroRepository,
+    private val clienteService: ClienteService
 ) {
 
-    fun criar(livro: Livro) = livroRepository.save(livro)
+    fun criar(requisicao: LivroRequisicaoDto): Livro {
+        val cliente = clienteService.buscarPorId(requisicao.clienteId)
+        val livro = requisicao.paraModelo(cliente)
+        return livroRepository.save(livro)
+    }
 
-    fun buscarTodos(paginacao: Pageable): Page<Livro> = livroRepository.findAll(paginacao)
+    fun buscarTodos(paginacao: Pageable): Page<Livro> {
+        return livroRepository.findAll(paginacao)
+    }
 
-    fun buscarAtivos(paginacao: Pageable): Page<Livro> =
-        livroRepository.findByStatus(LivroStatus.ATIVO, paginacao)
+    fun buscarAtivos(paginacao: Pageable): Page<Livro> {
+        return livroRepository.findByStatus(LivroStatus.ATIVO, paginacao)
+    }
 
-    fun buscarPorId(id: Int): Livro =
-        livroRepository.findById(id)
-            .orElseThrow { NotFoundException(Errors.ML101.message.format(id), Errors.ML101.code) }
+    fun buscarPorId(id: Int): Livro {
+        return livroRepository.findById(id)
+            .orElseThrow { NaoEncontradoException(Erros.LV001.mensagem.format(id), Erros.LV001.codigo) }
+    }
 
     @Transactional
     fun excluir(id: Int) {
         val livro = buscarPorId(id)
+        validarAlteracaoStatus(livro)
         livro.status = LivroStatus.CANCELADO
-        livroRepository.save(livro)
     }
 
-    fun atualizar(livro: Livro) = livroRepository.save(livro)
+    @Transactional
+    fun atualizar(id: Int, requisicao: LivroAtualizacaoDto) {
+        val livroExistente = buscarPorId(id)
+        validarAlteracaoStatus(livroExistente)
+        val livroAtualizado = requisicao.paraModelo(livroExistente)
+        livroRepository.save(livroAtualizado)
+    }
 
     @Transactional
     fun excluirPorCliente(cliente: Cliente) {
         val livros = livroRepository.findByCliente(cliente)
-        livros.forEach { it.status = LivroStatus.DELETADO }
-        livroRepository.saveAll(livros)
+        livros.forEach {
+            validarAlteracaoStatus(it)
+            it.status = LivroStatus.DELETADO
+        }
     }
 
-    fun buscarTodosPorIds(livroIds: Set<Int>): List<Livro> =
-        livroRepository.findAllById(livroIds).toList()
+    fun buscarTodosPorIds(livroIds: Set<Int>): List<Livro> {
+        val livros = livroRepository.findAllById(livroIds)
+
+        if (livros.size != livroIds.size) {
+            val idsEncontrados = livros.map { it.id }.toSet()
+            val idsNaoEncontrados = livroIds - idsEncontrados
+            throw NaoEncontradoException(
+                Erros.LV003.mensagem.format(idsNaoEncontrados.joinToString()),
+                Erros.LV003.codigo
+            )
+        }
+
+        return livros
+    }
 
     @Transactional
     fun comprar(livros: MutableList<Livro>) {
-        livros.forEach { it.status = LivroStatus.VENDIDO }
-        livroRepository.saveAll(livros)
+        livros.forEach {
+            validarAlteracaoStatus(it)
+            it.status = LivroStatus.VENDIDO
+        }
+    }
+
+    private fun validarAlteracaoStatus(livro: Livro) {
+        if (livro.status == LivroStatus.CANCELADO || livro.status == LivroStatus.DELETADO) {
+            throw RequisicaoInvalidaException(
+                Erros.LV002.mensagem.format(livro.status),
+                Erros.LV002.codigo
+            )
+        }
     }
 }
