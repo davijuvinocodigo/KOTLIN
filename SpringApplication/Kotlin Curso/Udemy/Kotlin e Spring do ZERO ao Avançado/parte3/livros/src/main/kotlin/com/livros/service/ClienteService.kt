@@ -1,14 +1,11 @@
 package com.livros.service
 
-
+import com.livros.component.ConsultaClienteComponent
 import com.livros.eventos.AuditoriaCliente
 import com.livros.eventos.publicador.PublicadorSincrono
-import com.livros.excecao.NaoEncontradoException
-import com.livros.excecao.RequisicaoInvalidaException
 import com.livros.model.dto.ClienteAtualizacaoDto
 import com.livros.model.dto.ClienteRequisicaoDto
 import com.livros.model.enums.ClienteStatus
-import com.livros.model.enums.Erros
 import com.livros.extensao.paraModelo
 import com.livros.model.Cliente
 import com.livros.repository.ClienteRepository
@@ -18,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ClienteService(
     private val clienteRepository: ClienteRepository,
+    private val consultaClienteComponent: ConsultaClienteComponent,
     private val livroService: LivroService,
     private val publicadorEvento: PublicadorSincrono<AuditoriaCliente>
 ) {
@@ -36,8 +34,7 @@ class ClienteService(
     }
 
     fun buscarPorId(id: Int): Cliente {
-        return clienteRepository.findById(id)
-            .orElseThrow { NaoEncontradoException(Erros.CL001.mensagem.format(id), Erros.CL001.codigo) }
+        return consultaClienteComponent.buscarPorId(id)
     }
 
     @Transactional
@@ -56,6 +53,6 @@ class ClienteService(
     }
 
     fun emailDisponivel(email: String): Boolean {
-        return !clienteRepository.existsByEmail(email)
+        return consultaClienteComponent.emailDisponivel(email)
     }
 }

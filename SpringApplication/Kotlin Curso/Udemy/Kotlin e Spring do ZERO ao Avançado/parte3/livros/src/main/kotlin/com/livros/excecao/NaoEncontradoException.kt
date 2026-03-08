@@ -1,3 +1,3 @@
 package com.livros.excecao
 
-class NaoEncontradoException(override val message: String, val codigoErro: String) : Exception()
+class NaoEncontradoException(override val message: String) : Exception()
