@@ -1,12 +1,12 @@
 package com.livros.controller
 
+import com.livros.extensao.paraResposta
 import com.livros.model.dto.LivroRequisicaoDto
 import com.livros.model.dto.LivroAtualizacaoDto
 import com.livros.model.dto.resposta.LivroResposta
-import com.livros.extensao.paraResposta
+import com.livros.model.dto.resposta.PaginacaoResposta
 import com.livros.service.LivroService
 import jakarta.validation.Valid
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
@@ -25,13 +25,15 @@ class LivroController(
     }
 
     @GetMapping
-    fun buscarTodos(@PageableDefault(page = 0, size = 10) paginacao: Pageable): Page<LivroResposta> {
-        return livroService.buscarTodos(paginacao).map { it.paraResposta() }
+    fun buscarTodos(@PageableDefault(page = 0, size = 10) paginacao: Pageable): PaginacaoResposta<LivroResposta> {
+        val page = livroService.buscarTodos(paginacao).map { it.paraResposta() }
+        return PaginacaoResposta.fromPage(page)
     }
 
     @GetMapping("/ativos")
-    fun buscarAtivos(@PageableDefault(page = 0, size = 10) paginacao: Pageable): Page<LivroResposta> {
-        return livroService.buscarAtivos(paginacao).map { it.paraResposta() }
+    fun buscarAtivos(@PageableDefault(page = 0, size = 10) paginacao: Pageable): PaginacaoResposta<LivroResposta> {
+        val page = livroService.buscarAtivos(paginacao).map { it.paraResposta() }
+        return PaginacaoResposta.fromPage(page)
     }
 
     @GetMapping("/{id}")
